@@ -1,25 +1,24 @@
 package br.com.vga.mymoney.entity;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
-public class Conta implements Serializable {
+public class Grupo implements Serializable {
 
     @Id
     @GeneratedValue
     private Long id;
 
     private String nome;
-    private BigDecimal saldoInicial;
 
-    @ManyToOne
-    private Grupo grupo;
+    @OneToMany(mappedBy = "grupo")
+    private List<Conta> contas;
 
     public Long getId() {
 	return id;
@@ -37,20 +36,12 @@ public class Conta implements Serializable {
 	this.nome = nome;
     }
 
-    public BigDecimal getSaldoInicial() {
-	return saldoInicial;
+    public List<Conta> getContas() {
+	return contas;
     }
 
-    public void setSaldoInicial(BigDecimal saldoInicial) {
-	this.saldoInicial = saldoInicial;
-    }
-
-    public Grupo getGrupo() {
-	return grupo;
-    }
-
-    public void setGrupo(Grupo grupo) {
-	this.grupo = grupo;
+    public void setContas(List<Conta> contas) {
+	this.contas = contas;
     }
 
     @Override
@@ -69,7 +60,7 @@ public class Conta implements Serializable {
 	    return false;
 	if (getClass() != obj.getClass())
 	    return false;
-	Conta other = (Conta) obj;
+	Grupo other = (Grupo) obj;
 	if (id == null) {
 	    if (other.id != null)
 		return false;
