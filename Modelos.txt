@@ -1,13 +1,22 @@
 CONTA || SUBCATEGORIAS
 
+[SIMPLES]
+
 LANÇAMENTOS:
 	GASTO		  =  -Conta, Data, Valor, Subcategorias
 	RECEITA 	  =  +Conta, Data, Valor, Subcategorias
 	TRANSFERÊNCIA = +-Conta, Data, Valor
 
 
-TÍTULOS:
-=> Data, Descrição, Valor,
+[COMPLEXO]
 
-	PARCELAS
+TÍTULOS:
+=> Conta, Data, Descrição, Valor,
+	PARCELAS = Data_vencimento, Valor, Subcategoria, Observação
+
+RECEITAS:
+=> Conta, Data, Descrição, Valor, Subcategorias, Observação
+
+TRANFERÊNCIAS:
+=> Conta_origem, Conta_destino, Data, Descrição, Valor, Observação
 
