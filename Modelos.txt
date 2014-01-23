@@ -1,0 +1,13 @@
+CONTA || SUBCATEGORIAS
+
+LANÇAMENTOS:
+	GASTO		  =  -Conta, Data, Valor, Subcategorias
+	RECEITA 	  =  +Conta, Data, Valor, Subcategorias
+	TRANSFERÊNCIA = +-Conta, Data, Valor
+
+
+TÍTULOS:
+=> Data, Descrição, Valor,
+
+	PARCELAS
+
