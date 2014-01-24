@@ -36,7 +36,7 @@ public class AbstractDao<T> {
 
     public void delete(T t) {
 	begin();
-	em.remove(update(t));
+	em.remove(em.merge(t));
 	commit();
     }
 
