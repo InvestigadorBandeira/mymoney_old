@@ -1,26 +1,40 @@
 package br.com.vga.mymoney.main;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import javax.persistence.EntityManager;
 
 import br.com.vga.mymoney.dao.CategoriaDao;
 import br.com.vga.mymoney.dao.ContaDao;
 import br.com.vga.mymoney.dao.GrupoDao;
+import br.com.vga.mymoney.dao.ParcelaDao;
 import br.com.vga.mymoney.dao.SubCategoriaDao;
+import br.com.vga.mymoney.dao.TituloDao;
 import br.com.vga.mymoney.entity.Categoria;
 import br.com.vga.mymoney.entity.Conta;
 import br.com.vga.mymoney.entity.Grupo;
+import br.com.vga.mymoney.entity.Parcela;
 import br.com.vga.mymoney.entity.SubCategoria;
+import br.com.vga.mymoney.entity.Titulo;
 import br.com.vga.mymoney.util.Conexao;
 
 public class Main {
 
+    private static StringBuilder print = new StringBuilder();
+
     public static void main(String[] args) {
 
-	criaRegistros(Conexao.getInstance());
+	try {
+	    criaRegistros(Conexao.getInstance());
+	    Conexao.getInstance().getEntityManagerFactory().close();
+	} catch (Exception e) {
+	    System.out.println("ERRO:  " + e.getMessage());
+	    Conexao.getInstance().getEntityManagerFactory().close();
+	}
 
-	Conexao.getInstance().getEntityManagerFactory().close();
+	System.out.println(print);
     }
 
     private static void criaRegistros(EntityManager em) {
@@ -28,6 +42,8 @@ public class Main {
 	CategoriaDao categoriaDao = new CategoriaDao(em);
 	ContaDao contaDao = new ContaDao(em);
 	SubCategoriaDao subCategoriaDao = new SubCategoriaDao(em);
+	TituloDao tituloDao = new TituloDao(em);
+	ParcelaDao parcelaDao = new ParcelaDao(em);
 
 	Grupo grupo = new Grupo();
 	grupo.setNome("BANCOS");
@@ -59,22 +75,62 @@ public class Main {
 	sub2.setCategoria(categoria);
 	// subCategoriaDao.save(sub2);
 
+	Titulo titulo = new Titulo();
+	titulo.setConta(contaDao.findById(1L));
+	titulo.setData(Calendar.getInstance());
+	titulo.setDescricao("Compra de 01 pendrive de 16Gb.");
+	titulo.setValor(new BigDecimal("32.41"));
+	// tituloDao.save(titulo);
+
+	Parcela p1 = new Parcela();
+	p1.setDataVencimento(Calendar.getInstance());
+	p1.setValor(new BigDecimal("16.21"));
+	p1.setSubCategoria(subCategoriaDao.findById(1L));
+	p1.setObservacao("1");
+	p1.setTitulo(titulo);
+	// parcelaDao.save(p1);
+
+	Parcela p2 = new Parcela();
+	p2.setDataVencimento(Calendar.getInstance());
+	p2.setValor(new BigDecimal("16.20"));
+	p2.setSubCategoria(subCategoriaDao.findById(1L));
+	p2.setObservacao("2");
+	p2.setTitulo(titulo);
+	// parcelaDao.save(p2);
+
+	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+	print.append("\nContas\n");
 	for (Grupo g : grupoDao.findAll()) {
-	    System.out.println(g.getId() + " - " + g.getNome());
+	    print.append(" " + g.getId() + " - " + g.getNome() + "\n");
 
 	    for (Conta c : g.getContas())
-		System.out.println("     " + c.getId() + " - " + c.getNome()
-			+ " - " + c.getSaldoInicial());
+		print.append("     " + c.getId() + " - " + c.getNome() + " - "
+			+ c.getSaldoInicial() + "\n");
 	}
 
-	System.out.println();
-
+	print.append("\nCategorias\n");
 	for (Categoria c : categoriaDao.findAll()) {
-	    System.out.println(c.getId() + " - " + c.getNome());
+	    print.append(" " + c.getId() + " - " + c.getNome() + "\n");
 
 	    for (SubCategoria s : c.getSubCategorias())
-		System.out.println("     " + s.getId() + " - " + s.getNome());
+		print.append("     " + s.getId() + " - " + s.getNome() + "\n");
 	}
 
+	print.append("\nParcelas\n");
+	for (Titulo t : tituloDao.findAll()) {
+	    print.append(" " + t.getId() + " - " + t.getConta() + " - "
+		    + sdf.format(t.getData().getTime()) + " - "
+		    + t.getDescricao() + " - " + t.getValor() + "\n");
+
+	    for (Parcela p : t.getParcelas())
+		print.append("     " + p.getId() + " - "
+			+ sdf.format(p.getDataVencimento().getTime()) + " - "
+			+ p.getValor() + " - " + p.getSubCategoria() + " - "
+			+ p.getObservacao() + "\n");
+	}
+
+	// Titulo t1 = tituloDao.findById(1L);
+	// tituloDao.delete(t1);
     }
 }
