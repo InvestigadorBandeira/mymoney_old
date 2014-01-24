@@ -24,6 +24,7 @@ public class Parcela implements Serializable {
 
     private BigDecimal valor;
 
+    @ManyToOne
     private SubCategoria subCategoria;
 
     private String observacao;
