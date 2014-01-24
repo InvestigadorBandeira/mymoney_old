@@ -10,12 +10,14 @@ import javax.persistence.ManyToOne;
 
 @Entity
 public class Conta implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue
     private Long id;
 
     private String nome;
+
     private BigDecimal saldoInicial;
 
     @ManyToOne
