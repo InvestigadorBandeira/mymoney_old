@@ -10,14 +10,18 @@ import br.com.vga.mymoney.dao.CategoriaDao;
 import br.com.vga.mymoney.dao.ContaDao;
 import br.com.vga.mymoney.dao.GrupoDao;
 import br.com.vga.mymoney.dao.ParcelaDao;
+import br.com.vga.mymoney.dao.ReceitaDao;
 import br.com.vga.mymoney.dao.SubCategoriaDao;
 import br.com.vga.mymoney.dao.TituloDao;
+import br.com.vga.mymoney.dao.TransferenciaDao;
 import br.com.vga.mymoney.entity.Categoria;
 import br.com.vga.mymoney.entity.Conta;
 import br.com.vga.mymoney.entity.Grupo;
 import br.com.vga.mymoney.entity.Parcela;
+import br.com.vga.mymoney.entity.Receita;
 import br.com.vga.mymoney.entity.SubCategoria;
 import br.com.vga.mymoney.entity.Titulo;
+import br.com.vga.mymoney.entity.Transferencia;
 import br.com.vga.mymoney.util.Conexao;
 
 public class Main {
@@ -44,6 +48,8 @@ public class Main {
 	SubCategoriaDao subCategoriaDao = new SubCategoriaDao(em);
 	TituloDao tituloDao = new TituloDao(em);
 	ParcelaDao parcelaDao = new ParcelaDao(em);
+	ReceitaDao receitaDao = new ReceitaDao(em);
+	TransferenciaDao transferenciaDao = new TransferenciaDao(em);
 
 	Grupo grupo = new Grupo();
 	grupo.setNome("BANCOS");
@@ -98,6 +104,24 @@ public class Main {
 	p2.setTitulo(titulo);
 	// parcelaDao.save(p2);
 
+	Receita receita = new Receita();
+	receita.setConta(contaDao.findById(1L));
+	receita.setData(Calendar.getInstance());
+	receita.setDescricao("Salário");
+	receita.setValor(new BigDecimal("698.00"));
+	receita.setSubCategoria(subCategoriaDao.findById(2L));
+	receita.setObservacao("Competência 12/2013");
+	// receitaDao.save(receita);
+
+	Transferencia transferencia = new Transferencia();
+	transferencia.setContaOrigem(contaDao.findById(1L));
+	transferencia.setContaDestino(contaDao.findById(2L));
+	transferencia.setData(Calendar.getInstance());
+	transferencia.setDescricao("Pagar fatura cartão Bradesco");
+	transferencia.setValor(new BigDecimal("120.00"));
+	transferencia.setObservacao("");
+	// transferenciaDao.save(transferencia);
+
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
 	print.append("\nContas\n");
@@ -130,6 +154,23 @@ public class Main {
 			+ p.getObservacao() + "\n");
 	}
 
+	print.append("\nReceitas\n");
+	for (Receita r : receitaDao.findAll())
+	    print.append(" " + r.getId() + " - " + r.getConta() + " - "
+		    + sdf.format(r.getData().getTime()) + " - "
+		    + r.getDescricao() + " - " + r.getValor() + " - "
+		    + r.getSubCategoria() + " - " + r.getObservacao() + "\n");
+
+	print.append("\nTransferências\n");
+	for (Transferencia t : transferenciaDao.findAll())
+	    print.append(" " + t.getId() + " - " + t.getContaOrigem() + " - "
+		    + t.getContaDestino() + " - "
+		    + sdf.format(t.getData().getTime()) + " - "
+		    + t.getDescricao() + " - " + t.getValor() + " - "
+		    + t.getObservacao() + "\n");
+
+	System.out.println(new BigDecimal("-700.0")
+		.add(new BigDecimal("600.00")));
 	// Titulo t1 = tituloDao.findById(1L);
 	// tituloDao.delete(t1);
     }
