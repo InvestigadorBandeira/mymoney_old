@@ -24,6 +24,10 @@ public class Parcela implements Serializable {
 
     private BigDecimal valor;
 
+    private BigDecimal acrescimo;
+
+    private BigDecimal desconto;
+
     @ManyToOne
     private SubCategoria subCategoria;
 
@@ -54,6 +58,22 @@ public class Parcela implements Serializable {
 
     public void setValor(BigDecimal valor) {
 	this.valor = valor;
+    }
+
+    public BigDecimal getAcrescimo() {
+	return acrescimo;
+    }
+
+    public void setAcrescimo(BigDecimal acrescimo) {
+	this.acrescimo = acrescimo;
+    }
+
+    public BigDecimal getDesconto() {
+	return desconto;
+    }
+
+    public void setDesconto(BigDecimal desconto) {
+	this.desconto = desconto;
     }
 
     public SubCategoria getSubCategoria() {
