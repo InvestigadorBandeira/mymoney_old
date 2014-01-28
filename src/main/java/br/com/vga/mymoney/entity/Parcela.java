@@ -36,6 +36,11 @@ public class Parcela implements Serializable {
     @ManyToOne
     private Titulo titulo;
 
+    private Boolean paga = false;
+
+    @ManyToOne
+    private Pagamento pagamento;
+
     public Long getId() {
 	return id;
     }
@@ -98,6 +103,22 @@ public class Parcela implements Serializable {
 
     public void setTitulo(Titulo titulo) {
 	this.titulo = titulo;
+    }
+
+    public Boolean getPaga() {
+	return paga;
+    }
+
+    public void setPaga(Boolean paga) {
+	this.paga = paga;
+    }
+
+    public Pagamento getPagamento() {
+	return pagamento;
+    }
+
+    public void setPagamento(Pagamento pagamento) {
+	this.pagamento = pagamento;
     }
 
     @Override
