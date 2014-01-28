@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 import br.com.vga.mymoney.dao.CategoriaDao;
 import br.com.vga.mymoney.dao.ContaDao;
 import br.com.vga.mymoney.dao.GrupoDao;
+import br.com.vga.mymoney.dao.PagamentoDao;
 import br.com.vga.mymoney.dao.ParcelaDao;
 import br.com.vga.mymoney.dao.ReceitaDao;
 import br.com.vga.mymoney.dao.SubCategoriaDao;
@@ -17,6 +18,7 @@ import br.com.vga.mymoney.dao.TransferenciaDao;
 import br.com.vga.mymoney.entity.Categoria;
 import br.com.vga.mymoney.entity.Conta;
 import br.com.vga.mymoney.entity.Grupo;
+import br.com.vga.mymoney.entity.Pagamento;
 import br.com.vga.mymoney.entity.Parcela;
 import br.com.vga.mymoney.entity.Receita;
 import br.com.vga.mymoney.entity.SubCategoria;
@@ -50,6 +52,7 @@ public class Main {
 	ParcelaDao parcelaDao = new ParcelaDao(em);
 	ReceitaDao receitaDao = new ReceitaDao(em);
 	TransferenciaDao transferenciaDao = new TransferenciaDao(em);
+	PagamentoDao pagamentoDao = new PagamentoDao(em);
 
 	Grupo grupo = new Grupo();
 	grupo.setNome("BANCOS");
@@ -122,6 +125,21 @@ public class Main {
 	transferencia.setObservacao("");
 	// transferenciaDao.save(transferencia);
 
+	Pagamento pagamento = new Pagamento();
+	pagamento.setConta(contaDao.findById(1L));
+	pagamento.setData(Calendar.getInstance());
+	pagamento.setValorTotal(new BigDecimal("32.41"));
+	// pagamentoDao.save(pagamento);
+
+	p1 = parcelaDao.findById(1L);
+	p1.setPagamento(pagamento);
+	p1.setPaga(true);
+	p2 = parcelaDao.findById(2L);
+	p2.setPagamento(pagamento);
+	p2.setPaga(true);
+	// p1 = parcelaDao.update(p1);
+	// p2 = parcelaDao.update(p2);
+
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
 	print.append("\nContas\n");
@@ -169,9 +187,28 @@ public class Main {
 		    + t.getDescricao() + " - " + t.getValor() + " - "
 		    + t.getObservacao() + "\n");
 
-	System.out.println(new BigDecimal("-700.0")
-		.add(new BigDecimal("600.00")));
-	// Titulo t1 = tituloDao.findById(1L);
-	// tituloDao.delete(t1);
+	print.append("\nPagamentos\n");
+	for (Pagamento p : pagamentoDao.findAll()) {
+	    print.append(" " + p.getId() + " - " + p.getConta() + " - "
+		    + sdf.format(p.getData().getTime()) + " - "
+		    + p.getValorTotal() + "\n");
+
+	    for (Parcela par : p.getParcelas())
+		print.append("     " + par.getId() + " - "
+			+ sdf.format(par.getDataVencimento().getTime()) + " - "
+			+ par.getValor() + " - " + par.getSubCategoria()
+			+ " - " + par.getObservacao() + "\n");
+	}
+
+	pagamento = pagamentoDao.findById(1L);
+	p1 = parcelaDao.findById(1L);
+	p1.setPagamento(null);
+	p2 = parcelaDao.findById(2L);
+	p2.setPagamento(null);
+	// parcelaDao.update(p1);
+	// parcelaDao.update(p2);
+
+	// pagamentoDao.delete(pagamento);
+
     }
 }
