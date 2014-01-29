@@ -12,7 +12,10 @@ LANÇAMENTOS:
 
 TÍTULOS:
 => Conta, Data, Descrição, Valor,
-	PARCELAS = Data_vencimento, Valor, Subcategoria, Observação
+	PARCELAS = Data_vencimento, Valor, Acréscimo, Desconto, Subcategoria, Observação, Pagamento
+
+PAGAMENTO:
+=> Conta, Data, Parcelas, Valor_total
 
 RECEITAS:
 => Conta, Data, Descrição, Valor, Subcategorias, Observação
