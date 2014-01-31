@@ -3,6 +3,8 @@ package br.com.vga.mymoney.view.tables;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
+import br.com.vga.mymoney.view.components.CalendarRenderer;
+import br.com.vga.mymoney.view.components.DecimalRenderer;
 import br.com.vga.mymoney.view.tables.models.ParcelaTableModel;
 
 public class ParcelaTable extends JTable {
@@ -28,5 +30,11 @@ public class ParcelaTable extends JTable {
 	getColumnModel().getColumn(model.VALOR).setPreferredWidth(50);
 	getColumnModel().getColumn(model.SUBCATEGORIA).setPreferredWidth(100);
 	getColumnModel().getColumn(model.OBSERVACAO).setPreferredWidth(250);
+
+	getColumnModel().getColumn(model.DATA_VENCIMENTO).setCellRenderer(
+		new CalendarRenderer());
+	getColumnModel().getColumn(model.VALOR).setCellRenderer(
+		new DecimalRenderer());
+
     }
 }
