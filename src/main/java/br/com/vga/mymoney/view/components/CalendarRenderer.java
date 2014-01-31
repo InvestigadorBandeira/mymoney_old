@@ -6,6 +6,7 @@ import java.util.Calendar;
 import javax.swing.table.DefaultTableCellRenderer;
 
 public class CalendarRenderer extends DefaultTableCellRenderer {
+    private static final long serialVersionUID = 1L;
 
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
