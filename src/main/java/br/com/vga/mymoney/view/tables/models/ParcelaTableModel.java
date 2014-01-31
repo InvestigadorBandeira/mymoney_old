@@ -1,5 +1,6 @@
 package br.com.vga.mymoney.view.tables.models;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +15,7 @@ public class ParcelaTableModel extends AbstractTableModel {
     private List<Parcela> parcelas;
 
     // Array com os nomes das colunas.
-    private String[] colunas = new String[] { "Vencimento", "Valor",
+    private final String[] colunas = new String[] { "Vencimento", "Valor",
 	    "Categoria", "Observação" };
 
     // Constantes representando o índice das colunas
@@ -56,7 +57,7 @@ public class ParcelaTableModel extends AbstractTableModel {
 	    return parcela.getDataVencimento();
 
 	case VALOR:
-	    return parcela.getValor().toString();
+	    return parcela.getValor();
 
 	case SUBCATEGORIA:
 	    return parcela.getSubCategoria();
@@ -76,7 +77,7 @@ public class ParcelaTableModel extends AbstractTableModel {
 	    return String.class;
 
 	case VALOR:
-	    return String.class;
+	    return BigDecimal.class;
 
 	case SUBCATEGORIA:
 	    return SubCategoria.class;
