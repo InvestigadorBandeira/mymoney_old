@@ -7,7 +7,6 @@ import javax.swing.table.AbstractTableModel;
 
 import br.com.vga.mymoney.entity.Parcela;
 import br.com.vga.mymoney.entity.SubCategoria;
-import br.com.vga.mymoney.util.Formatador;
 
 public class ParcelaTableModel extends AbstractTableModel {
     private static final long serialVersionUID = 1L;
@@ -16,13 +15,13 @@ public class ParcelaTableModel extends AbstractTableModel {
 
     // Array com os nomes das colunas.
     private String[] colunas = new String[] { "Vencimento", "Valor",
-	    "Categoria", "Observação" };;
+	    "Categoria", "Observação" };
 
     // Constantes representando o índice das colunas
-    private static final int DATA_VENCIMENTO = 0;
-    private static final int VALOR = 1;
-    private static final int SUBCATEGORIA = 2;
-    private static final int OBSERVACAO = 3;
+    public final int DATA_VENCIMENTO = 0;
+    public final int VALOR = 1;
+    public final int SUBCATEGORIA = 2;
+    public final int OBSERVACAO = 3;
 
     public ParcelaTableModel() {
 	parcelas = new ArrayList<>();
@@ -54,7 +53,7 @@ public class ParcelaTableModel extends AbstractTableModel {
 
 	switch (columnIndex) {
 	case DATA_VENCIMENTO:
-	    return Formatador.dataTexto(parcela.getDataVencimento());
+	    return parcela.getDataVencimento();
 
 	case VALOR:
 	    return parcela.getValor().toString();
