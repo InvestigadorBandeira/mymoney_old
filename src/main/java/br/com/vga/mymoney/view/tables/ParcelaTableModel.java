@@ -15,14 +15,15 @@ public class ParcelaTableModel extends AbstractTableModel {
     private List<Parcela> parcelas;
 
     // Array com os nomes das colunas.
-    private final String[] colunas = new String[] { "Vencimento", "Valor",
+    private final String[] colunas = new String[] { "#", "Vencimento", "Valor",
 	    "Categoria", "Observação" };
 
     // Constantes representando o índice das colunas
-    public final int DATA_VENCIMENTO = 0;
-    public final int VALOR = 1;
-    public final int SUBCATEGORIA = 2;
-    public final int OBSERVACAO = 3;
+    public final int INDICE = 0;
+    public final int DATA_VENCIMENTO = 1;
+    public final int VALOR = 2;
+    public final int SUBCATEGORIA = 3;
+    public final int OBSERVACAO = 4;
 
     public ParcelaTableModel() {
 	parcelas = new ArrayList<>();
@@ -31,6 +32,18 @@ public class ParcelaTableModel extends AbstractTableModel {
     public void setParcelas(List<Parcela> parcelas) {
 	this.parcelas = parcelas;
 	fireTableDataChanged();
+    }
+
+    public void setParcela(Parcela parcela) {
+	parcelas.add(parcela);
+
+	// Pega a quantidade de registros e subtrai 1 para
+	// achar o último índice. A subtração é necessária
+	// porque os índices começam em zero.
+	int ultimoIndice = getRowCount() - 1;
+
+	// Notifica a mudança.
+	fireTableRowsInserted(ultimoIndice, ultimoIndice);
     }
 
     @Override
@@ -53,6 +66,9 @@ public class ParcelaTableModel extends AbstractTableModel {
 	Parcela parcela = parcelas.get(rowIndex);
 
 	switch (columnIndex) {
+	case INDICE:
+	    return rowIndex + 1;
+
 	case DATA_VENCIMENTO:
 	    return parcela.getDataVencimento();
 
@@ -73,6 +89,9 @@ public class ParcelaTableModel extends AbstractTableModel {
     @Override
     public Class<?> getColumnClass(int columnIndex) {
 	switch (columnIndex) {
+	case INDICE:
+	    return Integer.class;
+
 	case DATA_VENCIMENTO:
 	    return String.class;
 
