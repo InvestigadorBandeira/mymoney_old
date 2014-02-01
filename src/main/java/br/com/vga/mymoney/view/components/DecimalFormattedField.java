@@ -14,7 +14,7 @@ public class DecimalFormattedField extends JFormattedTextField {
     private static final long serialVersionUID = 1L;
 
     /** Constantes para definir o formato */
-    public static final String NUMERO = "#,##0.00; -#,##0.00";
+    public static final String NUMERO = "#,##0.00;-#,##0.00";
     public static final String REAL = "R$ #,##0.00;R$ -#,##0.00";
     public static final String PORCENTAGEM = "#,##0.00'%';-#,##0.00'%'";
 
