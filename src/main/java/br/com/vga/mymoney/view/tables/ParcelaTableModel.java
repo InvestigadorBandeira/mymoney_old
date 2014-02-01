@@ -1,4 +1,4 @@
-package br.com.vga.mymoney.view.tables.models;
+package br.com.vga.mymoney.view.tables;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

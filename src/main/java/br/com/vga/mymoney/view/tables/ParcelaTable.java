@@ -5,7 +5,6 @@ import javax.swing.ListSelectionModel;
 
 import br.com.vga.mymoney.view.components.CalendarRenderer;
 import br.com.vga.mymoney.view.components.DecimalRenderer;
-import br.com.vga.mymoney.view.tables.models.ParcelaTableModel;
 
 public class ParcelaTable extends JTable {
     private static final long serialVersionUID = 1L;
