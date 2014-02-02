@@ -1,7 +1,5 @@
 package br.com.vga.mymoney.view.tables;
 
-import java.math.BigDecimal;
-import java.util.Calendar;
 import java.util.List;
 
 import javax.swing.JTable;
@@ -18,16 +16,6 @@ public class ParcelaTable extends JTable {
 
     public ParcelaTable() {
 	configura();
-
-	Parcela p = new Parcela();
-	p.setDataVencimento(Calendar.getInstance());
-	p.setValor(new BigDecimal("700.5"));
-	p.setObservacao("Home Theater Sony - Walmart");
-	adicionaParcela(p);
-	adicionaParcela(p);
-	adicionaParcela(p);
-	adicionaParcela(p);
-	adicionaParcela(p);
     }
 
     private void configura() {
