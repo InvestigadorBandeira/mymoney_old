@@ -2,6 +2,7 @@ package br.com.vga.mymoney.view;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -13,7 +14,10 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 
+import br.com.vga.mymoney.dao.SubCategoriaDao;
+import br.com.vga.mymoney.entity.Parcela;
 import br.com.vga.mymoney.entity.SubCategoria;
+import br.com.vga.mymoney.util.Conexao;
 import br.com.vga.mymoney.view.components.DecimalFormattedField;
 import br.com.vga.mymoney.view.tables.ParcelaTable;
 
@@ -39,8 +43,14 @@ public class ParcelaView extends JDialog {
     private JPanel pnParcelasIncluidas;
     private JButton btnExcluirParcela;
 
-    public ParcelaView() {
+    private final List<Parcela> parcelas;
+
+    public ParcelaView(List<Parcela> parcelas) {
 	initComponents();
+	montaComboCategoria();
+	this.parcelas = parcelas;
+	tbParcelas.adicionaParcelas(parcelas);
+	this.setLocationRelativeTo(null);
     }
 
     private void initComponents() {
@@ -139,5 +149,13 @@ public class ParcelaView extends JDialog {
 	btnExcluirParcela = new JButton("Excluir Parcela");
 	btnExcluirParcela.setBounds(10, 209, 150, 25);
 	pnParcelasIncluidas.add(btnExcluirParcela);
+    }
+
+    private void montaComboCategoria() {
+	List<SubCategoria> categorias = new SubCategoriaDao(
+		Conexao.getInstance()).findAll();
+
+	for (SubCategoria categoria : categorias)
+	    cbCategoria.addItem(categoria);
     }
 }
