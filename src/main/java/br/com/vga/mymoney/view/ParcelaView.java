@@ -40,7 +40,6 @@ public class ParcelaView extends JDialog {
     private JButton btnExcluirParcela;
 
     public ParcelaView() {
-
 	initComponents();
     }
 
