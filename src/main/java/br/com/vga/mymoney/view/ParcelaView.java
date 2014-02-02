@@ -34,7 +34,7 @@ public class ParcelaView extends JDialog {
     private JScrollPane scrollPane;
     private JLabel lblParcelasIncluidas;
     private ParcelaTable tbParcelas;
-    private JLabel lblQtdeParcelas;
+    private JLabel lblTotalDasParcelas;
     private JLabel lblQuantidadeDeParcelas;
     private JPanel pnParcelasIncluidas;
     private JButton btnExcluirParcela;
@@ -125,10 +125,10 @@ public class ParcelaView extends JDialog {
 	tbParcelas = new ParcelaTable();
 	scrollPane.setViewportView(tbParcelas);
 
-	lblQtdeParcelas = new JLabel("Total das Parcelas:");
-	lblQtdeParcelas.setBounds(10, 173, 240, 25);
-	pnParcelasIncluidas.add(lblQtdeParcelas);
-	lblQtdeParcelas.setFont(new Font("Tahoma", Font.BOLD, 12));
+	lblTotalDasParcelas = new JLabel("Total das Parcelas:");
+	lblTotalDasParcelas.setBounds(10, 173, 240, 25);
+	pnParcelasIncluidas.add(lblTotalDasParcelas);
+	lblTotalDasParcelas.setFont(new Font("Tahoma", Font.BOLD, 12));
 
 	lblQuantidadeDeParcelas = new JLabel("Quantidade de Parcelas: 0");
 	lblQuantidadeDeParcelas.setBounds(304, 173, 240, 25);
