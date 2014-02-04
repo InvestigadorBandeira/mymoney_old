@@ -4,7 +4,9 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -20,6 +22,9 @@ import javax.swing.border.TitledBorder;
 import br.com.vga.mymoney.controller.TituloController;
 import br.com.vga.mymoney.entity.Conta;
 import br.com.vga.mymoney.entity.Parcela;
+import br.com.vga.mymoney.entity.Titulo;
+import br.com.vga.mymoney.util.Formatador;
+import br.com.vga.mymoney.util.Mensagem;
 import br.com.vga.mymoney.view.components.DecimalFormattedField;
 import br.com.vga.mymoney.view.tables.ParcelaTable;
 
@@ -46,6 +51,7 @@ public class TituloView extends JDialog {
     private JButton btnSalvarTitulo;
 
     private List<Parcela> parcelas;
+    private Mensagem mensagem;
 
     private final TituloController controller;
 
@@ -164,6 +170,9 @@ public class TituloView extends JDialog {
 	});
 	btnSalvarTitulo.setBounds(10, 436, 150, 25);
 	getContentPane().add(btnSalvarTitulo);
+
+	//
+	mensagem = new Mensagem(this, getTitle());
     }
 
     public void montaComboConta(List<Conta> contas) {
@@ -171,15 +180,66 @@ public class TituloView extends JDialog {
 	    cbConta.addItem(conta);
     }
 
-    protected void btnGerenciarParcelasActionPerformed(ActionEvent e) {
-	if (parcelas == null)
-	    parcelas = new ArrayList<>();
-
-	ParcelaView view = new ParcelaView(parcelas);
-	view.setVisible(true);
+    public void atualizaCampos() {
+	txtData.setDate(null);
+	txtValor.setText("0.0");
+	txtDescricao.setText("");
+	parcelas = new ArrayList<>();
+	tbParcelas.adicionaParcelas(parcelas);
+	atualizaQtdeTotal();
+	cbConta.requestFocus();
 
     }
 
+    public void atualizaQtdeTotal() {
+	lblQuantidadeDeParcelas.setText("Quantidade de Parcelas: "
+		+ parcelas.size());
+
+	BigDecimal total = new BigDecimal("0.0");
+	for (Parcela p : parcelas)
+	    total = total.add(p.getValor());
+
+	lblTotalDasParcelas.setText("Total das Parcelas: "
+		+ Formatador.valorTexto(total));
+    }
+
+    protected void btnGerenciarParcelasActionPerformed(ActionEvent e) {
+	ParcelaView view = new ParcelaView(parcelas);
+	view.setVisible(true);
+	tbParcelas.adicionaParcelas(parcelas);
+	atualizaQtdeTotal();
+    }
+
     protected void btnSalvarTituloActionPerformed(ActionEvent e) {
+	int indexConta = cbConta.getSelectedIndex();
+	Calendar data = txtData.getCalendar();
+	String descricao = txtDescricao.getText().trim();
+	BigDecimal valor = new BigDecimal(txtValor.getValue().toString());
+
+	if (indexConta == -1) {
+	    mensagem.aviso("Selecione uma Conta para o título.");
+	    cbConta.requestFocus();
+	    return;
+	}
+
+	if (data == null) {
+	    mensagem.aviso("Data inválida.");
+	    txtData.requestFocus();
+	    return;
+	}
+
+	if (valor.equals(new BigDecimal("0.0"))) {
+	    mensagem.aviso("Valor não pode ser ZERO.");
+	    txtValor.requestFocus();
+	    return;
+	}
+
+	Titulo titulo = new Titulo();
+	titulo.setConta((Conta) cbConta.getSelectedItem());
+	titulo.setData(data);
+	titulo.setDescricao(descricao);
+	titulo.setValor(valor);
+	titulo.setParcelas(parcelas);
+	controller.salvar(titulo);
     }
 }

@@ -48,4 +48,5 @@ public class ParcelaTable extends JTable {
     public void adicionaParcela(Parcela parcela) {
 	model.setParcela(parcela);
     }
+
 }
