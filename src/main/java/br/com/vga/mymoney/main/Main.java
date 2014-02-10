@@ -6,7 +6,7 @@ import java.util.Calendar;
 
 import javax.persistence.EntityManager;
 
-import br.com.vga.mymoney.controller.TituloController;
+import br.com.vga.mymoney.controller.PrincipalController;
 import br.com.vga.mymoney.dao.CategoriaDao;
 import br.com.vga.mymoney.dao.ContaDao;
 import br.com.vga.mymoney.dao.GrupoDao;
@@ -34,11 +34,13 @@ public class Main {
     public static void main(String[] args) {
 
 	try {
-	    new TituloController(Conexao.getInstance());
+	    // new TituloController(Conexao.getInstance());
+	    new PrincipalController(Conexao.getInstance());
 	    // criaRegistros(Conexao.getInstance());
-	    Conexao.getInstance().getEntityManagerFactory().close();
 	} catch (Exception e) {
 	    System.out.println("ERRO:  " + e.getMessage());
+	    Conexao.getInstance().getEntityManagerFactory().close();
+	} finally {
 	    Conexao.getInstance().getEntityManagerFactory().close();
 	}
 
