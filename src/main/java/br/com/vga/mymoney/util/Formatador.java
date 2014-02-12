@@ -17,4 +17,9 @@ public class Formatador {
 	return valor != null ? df.format(valor) : "0,00";
     }
 
+    public static String valorTextoReal(BigDecimal valor) {
+	DecimalFormat df = new DecimalFormat("R$ #,##0.00;R$ -#,##0.00");
+	return valor != null ? df.format(valor) : "0,00";
+    }
+
 }
