@@ -11,12 +11,12 @@ import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 
 import br.com.vga.mymoney.controller.TituloController;
@@ -30,7 +30,7 @@ import br.com.vga.mymoney.view.tables.ParcelaTable;
 
 import com.toedter.calendar.JDateChooser;
 
-public class TituloView extends JDialog {
+public class TituloView extends JPanel {
     private static final long serialVersionUID = 1L;
     private JPanel pnTitulo;
     private JLabel lblConta;
@@ -58,23 +58,21 @@ public class TituloView extends JDialog {
     public TituloView(TituloController controller) {
 	this.controller = controller;
 	initComponents();
-	this.setLocationRelativeTo(null);
     }
 
     private void initComponents() {
-	setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-	setModal(true);
-	setTitle("Cadastro de T\u00EDtulos");
-	setResizable(false);
-	setBounds(100, 100, 580, 500);
-	getContentPane().setLayout(null);
+	setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"),
+		"  Cadastro de T\u00EDtulos  ", TitledBorder.LEADING,
+		TitledBorder.TOP, null, null));
+	setBounds(30, 20, 575, 489);
+	setLayout(null);
 
 	pnTitulo = new JPanel();
 	pnTitulo.setBackground(new Color(250, 250, 210));
 	pnTitulo.setBorder(new TitledBorder(null, "", TitledBorder.LEADING,
 		TitledBorder.TOP, null, null));
-	pnTitulo.setBounds(10, 11, 554, 156);
-	getContentPane().add(pnTitulo);
+	pnTitulo.setBounds(10, 25, 554, 156);
+	add(pnTitulo);
 	pnTitulo.setLayout(null);
 
 	lblConta = new JLabel("Conta");
@@ -124,8 +122,8 @@ public class TituloView extends JDialog {
 
 	TitledBorder.LEADING, TitledBorder.TOP, null, null));
 	panel.setBackground(new Color(250, 250, 210));
-	panel.setBounds(10, 178, 554, 247);
-	getContentPane().add(panel);
+	panel.setBounds(10, 192, 554, 247);
+	add(panel);
 
 	lblParcelasIncluidas = new JLabel("Parcelas Inclu\u00EDdas");
 	lblParcelasIncluidas.setHorizontalAlignment(SwingConstants.CENTER);
@@ -168,11 +166,11 @@ public class TituloView extends JDialog {
 		btnSalvarTituloActionPerformed(e);
 	    }
 	});
-	btnSalvarTitulo.setBounds(10, 436, 150, 25);
-	getContentPane().add(btnSalvarTitulo);
+	btnSalvarTitulo.setBounds(10, 450, 150, 25);
+	add(btnSalvarTitulo);
 
 	//
-	mensagem = new Mensagem(this, getTitle());
+	mensagem = new Mensagem(this, "Cadastro de Títulos");
     }
 
     public void montaComboConta(List<Conta> contas) {

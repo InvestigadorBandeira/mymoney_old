@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.swing.JPanel;
 
 import br.com.vga.mymoney.dao.ContaDao;
 import br.com.vga.mymoney.dao.ParcelaDao;
@@ -17,20 +18,31 @@ import br.com.vga.mymoney.view.TituloView;
 public class TituloController {
 
     private final TituloDao dao;
-    private final TituloView view;
-    private final Mensagem mensagem;
+    private TituloView view;
+    private Mensagem mensagem;
 
     private final ContaDao contaDao;
     private final ParcelaDao parcelaDao;
 
-    public TituloController(EntityManager em) {
-	view = new TituloView(this);
+    private JPanel telas;
+
+    public TituloController(EntityManager em, JPanel telas) {
 	dao = new TituloDao(em);
 	contaDao = new ContaDao(em);
 	parcelaDao = new ParcelaDao(em);
+
+	this.telas = telas;
+    }
+
+    public void exibeView() {
+	view = new TituloView(this);
 	montaComboConta();
 	view.atualizaCampos();
-	mensagem = new Mensagem(view, view.getTitle());
+	mensagem = new Mensagem(view, "Cadastro de Títulos");
+
+	telas.removeAll();
+	telas.add(view);
+	telas.updateUI();
 	view.setVisible(true);
     }
 
