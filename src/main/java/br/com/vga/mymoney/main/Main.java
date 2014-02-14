@@ -41,7 +41,7 @@ public class Main {
 	    System.out.println("ERRO:  " + e.getMessage());
 	    Conexao.getInstance().getEntityManagerFactory().close();
 	} finally {
-	    Conexao.getInstance().getEntityManagerFactory().close();
+	    // Conexao.getInstance().getEntityManagerFactory().close();
 	}
 
 	System.out.println(print);
