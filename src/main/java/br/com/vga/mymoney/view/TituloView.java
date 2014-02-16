@@ -54,6 +54,7 @@ public class TituloView extends JPanel {
     private Mensagem mensagem;
 
     private final TituloController controller;
+    private JButton btnSair;
 
     public TituloView(TituloController controller) {
 	this.controller = controller;
@@ -171,6 +172,16 @@ public class TituloView extends JPanel {
 
 	//
 	mensagem = new Mensagem(this, "Cadastro de Títulos");
+
+	btnSair = new JButton("Sair");
+	btnSair.addActionListener(new ActionListener() {
+	    @Override
+	    public void actionPerformed(ActionEvent e) {
+		btnSairActionPerformed(e);
+	    }
+	});
+	btnSair.setBounds(464, 450, 100, 25);
+	add(btnSair);
     }
 
     public void montaComboConta(List<Conta> contas) {
@@ -239,5 +250,10 @@ public class TituloView extends JPanel {
 	titulo.setValor(valor);
 	titulo.setParcelas(parcelas);
 	controller.salvar(titulo);
+    }
+
+    protected void btnSairActionPerformed(ActionEvent e) {
+	controller.sair();
+
     }
 }

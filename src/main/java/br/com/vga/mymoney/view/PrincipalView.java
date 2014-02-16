@@ -3,6 +3,8 @@ package br.com.vga.mymoney.view;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -11,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -18,6 +21,7 @@ import javax.swing.border.TitledBorder;
 
 import net.miginfocom.swing.MigLayout;
 import br.com.vga.mymoney.controller.PrincipalController;
+import br.com.vga.mymoney.util.Conexao;
 
 public class PrincipalView extends JFrame {
     private JMenuBar menuBar;
@@ -32,7 +36,7 @@ public class PrincipalView extends JFrame {
     private JMenuItem mntmGrupo;
     private JMenu mnFinanceiro;
 
-    private PrincipalController controller;
+    private final PrincipalController controller;
     private JMenu mnTitulos;
     private JMenuItem mntmIncluir;
 
@@ -50,10 +54,16 @@ public class PrincipalView extends JFrame {
     }
 
     private void initComponents() {
+	addWindowListener(new WindowAdapter() {
+	    @Override
+	    public void windowClosing(WindowEvent e) {
+		thisWindowClosing(e);
+	    }
+	});
 	setMinimumSize(new Dimension(740, 540));
 	setTitle("MyMoney - Sistema Financeiro Pessoal");
 	setBounds(100, 100, 740, 580);
-	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
 	pnTelas = new JPanel();
 	pnTelas.setLayout(null);
@@ -141,17 +151,35 @@ public class PrincipalView extends JFrame {
 
 	mntmIncluir = new JMenuItem("Incluir");
 	mntmIncluir.addActionListener(new ActionListener() {
+	    @Override
 	    public void actionPerformed(ActionEvent e) {
 		mntmIncluirActionPerformed(e);
 	    }
 	});
 	mnTitulos.add(mntmIncluir);
 
-	//
-	// setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
     protected void mntmIncluirActionPerformed(ActionEvent e) {
 	controller.incluirTitulo();
+    }
+
+    private void fechar() {
+	int opcao = JOptionPane.showConfirmDialog(null,
+		"Deseja sair do aplicativo?", "ATENÇÃO",
+		JOptionPane.YES_NO_OPTION);
+
+	if (opcao == JOptionPane.YES_OPTION) {
+	    try {
+		Conexao.getInstance().getEntityManagerFactory().close();
+		System.exit(0);
+	    } catch (Exception e) {
+		System.err.print("ERRO: " + e.getMessage());
+	    }
+	}
+    }
+
+    protected void thisWindowClosing(WindowEvent e) {
+	fechar();
     }
 }
