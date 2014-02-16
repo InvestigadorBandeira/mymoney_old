@@ -24,7 +24,7 @@ public class TituloController {
     private final ContaDao contaDao;
     private final ParcelaDao parcelaDao;
 
-    private JPanel telas;
+    private final JPanel telas;
 
     public TituloController(EntityManager em, JPanel telas) {
 	dao = new TituloDao(em);
@@ -74,5 +74,10 @@ public class TituloController {
 	dao.save(titulo);
 
 	view.atualizaCampos();
+    }
+
+    public void sair() {
+	telas.removeAll();
+	telas.updateUI();
     }
 }
