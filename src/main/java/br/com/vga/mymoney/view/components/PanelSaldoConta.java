@@ -13,13 +13,13 @@ import javax.swing.border.TitledBorder;
 import br.com.vga.mymoney.entity.Conta;
 import br.com.vga.mymoney.util.Formatador;
 
-public class PanelSaldoContas extends JPanel {
+public class PanelSaldoConta extends JPanel {
     private static final long serialVersionUID = 1L;
 
     private final Conta conta;
     private final BigDecimal saldo;
 
-    public PanelSaldoContas(Conta conta, BigDecimal saldo) {
+    public PanelSaldoConta(Conta conta, BigDecimal saldo) {
 	super();
 	this.conta = conta;
 	this.saldo = saldo;
