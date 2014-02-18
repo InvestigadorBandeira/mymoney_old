@@ -13,7 +13,7 @@ import br.com.vga.mymoney.dao.PagamentoDao;
 import br.com.vga.mymoney.entity.Conta;
 import br.com.vga.mymoney.util.Mensagem;
 import br.com.vga.mymoney.view.PrincipalView;
-import br.com.vga.mymoney.view.components.PanelSaldoContas;
+import br.com.vga.mymoney.view.components.PanelSaldoConta;
 
 public class PrincipalController {
 
@@ -49,7 +49,7 @@ public class PrincipalController {
 	List<Conta> contas = contaDao.findAll();
 	int qtdeContas = contas.size();
 
-	List<PanelSaldoContas> panelSaldoContas = new ArrayList<>();
+	List<PanelSaldoConta> panelSaldoContas = new ArrayList<>();
 
 	for (int i = 0; i < qtdeContas; i++) {
 	    layout.append("[40px]");
@@ -61,7 +61,7 @@ public class PrincipalController {
 	    saldo = saldo.subtract(pagamentoDao.totalPgtoPorConta(conta));
 
 	    saldoGlobal = saldoGlobal.add(saldo);
-	    panelSaldoContas.add(new PanelSaldoContas(conta, saldo));
+	    panelSaldoContas.add(new PanelSaldoConta(conta, saldo));
 	}
 
 	view.getPnContas().removeAll();
@@ -73,7 +73,7 @@ public class PrincipalController {
 	Conta saldo = new Conta();
 	saldo.setNome("Saldo Global");
 
-	view.getPnContas().add(new PanelSaldoContas(saldo, saldoGlobal),
+	view.getPnContas().add(new PanelSaldoConta(saldo, saldoGlobal),
 		"cell 0 0,grow");
 	view.getPnContas().add(new JPanel(), "cell 0 1,grow");
 
