@@ -40,6 +40,7 @@ public class PrincipalView extends JFrame {
     private JMenu mnTitulos;
     private JMenuItem mntmIncluir;
     private JMenuItem mntmListagem;
+    private JMenuItem mntmListagemDeParcelas;
 
     public PrincipalView(PrincipalController controller) {
 	this.controller = controller;
@@ -168,6 +169,14 @@ public class PrincipalView extends JFrame {
 	});
 	mnTitulos.add(mntmListagem);
 
+	mntmListagemDeParcelas = new JMenuItem("Listagem de Parcelas");
+	mntmListagemDeParcelas.addActionListener(new ActionListener() {
+	    public void actionPerformed(ActionEvent e) {
+		mntmListagemDeParcelasActionPerformed(e);
+	    }
+	});
+	mnTitulos.add(mntmListagemDeParcelas);
+
     }
 
     protected void mntmIncluirActionPerformed(ActionEvent e) {
@@ -176,6 +185,10 @@ public class PrincipalView extends JFrame {
 
     protected void mntmListagemActionPerformed(ActionEvent e) {
 	controller.listarTitulos();
+    }
+
+    protected void mntmListagemDeParcelasActionPerformed(ActionEvent e) {
+	controller.listarParcelas();
     }
 
     private void fechar() {

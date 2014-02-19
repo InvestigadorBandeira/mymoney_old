@@ -26,6 +26,7 @@ public class PrincipalController {
 
     private final TituloController tituloController;
     private final ListagemTituloController listagemTituloController;
+    private ListagemParcelaController listagemParcelaController;
 
     public PrincipalController(EntityManager em) {
 	view = new PrincipalView(this);
@@ -37,6 +38,7 @@ public class PrincipalController {
 
 	tituloController = new TituloController(em, telas);
 	listagemTituloController = new ListagemTituloController(em, telas);
+	listagemParcelaController = new ListagemParcelaController(em, telas);
 
 	atualizaContas();
 	view.setExtendedState(view.MAXIMIZED_BOTH);
@@ -94,5 +96,9 @@ public class PrincipalController {
     public void listarTitulos() {
 	listagemTituloController.exibeView();
 
+    }
+
+    public void listarParcelas() {
+	listagemParcelaController.exibeView();
     }
 }
