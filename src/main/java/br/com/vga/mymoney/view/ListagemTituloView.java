@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -16,13 +15,11 @@ import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 
 import br.com.vga.mymoney.controller.ListagemTituloController;
-import br.com.vga.mymoney.entity.Parcela;
 import br.com.vga.mymoney.util.Mensagem;
 
 public class ListagemTituloView extends JPanel {
     private static final long serialVersionUID = 1L;
 
-    private List<Parcela> parcelas;
     private Mensagem mensagem;
 
     private final ListagemTituloController controller;
@@ -33,8 +30,8 @@ public class ListagemTituloView extends JPanel {
     private JScrollPane scrollTitulos;
     private JPanel pnTitulos;
 
-    public ListagemTituloView(ListagemTituloController listagemTituloController) {
-	this.controller = listagemTituloController;
+    public ListagemTituloView(ListagemTituloController controller) {
+	this.controller = controller;
 	initComponents();
     }
 
@@ -90,6 +87,9 @@ public class ListagemTituloView extends JPanel {
 
 	pnTitulos = new JPanel();
 	scrollTitulos.setViewportView(pnTitulos);
+
+	//
+	mensagem = new Mensagem(this, "Listagem de T\u00EDtulos");
     }
 
     protected void btnFiltrarActionPerformed(ActionEvent e) {
