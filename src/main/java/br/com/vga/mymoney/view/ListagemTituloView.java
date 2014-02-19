@@ -11,6 +11,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 
@@ -29,6 +30,11 @@ public class ListagemTituloView extends JPanel {
     private JButton btnFiltrar;
     private JScrollPane scrollTitulos;
     private JPanel pnTitulos;
+    private JPanel pnHeader;
+    private JLabel lblConta;
+    private JLabel lblData;
+    private JLabel lblDescricao;
+    private JLabel lblValor;
 
     public ListagemTituloView(ListagemTituloController controller) {
 	this.controller = controller;
@@ -45,9 +51,6 @@ public class ListagemTituloView extends JPanel {
 		TitledBorder.TOP, null, null));
 	setBounds(30, 20, 680, 489);
 	setLayout(null);
-
-	//
-	mensagem = new Mensagem(this, "Cadastro de Títulos");
 
 	pnFiltro = new JPanel();
 	pnFiltro.setLayout(null);
@@ -79,23 +82,67 @@ public class ListagemTituloView extends JPanel {
 	btnFiltrar.setBounds(270, 13, 100, 25);
 	pnFiltro.add(btnFiltrar);
 
+	//
+	mensagem = new Mensagem(this, "Listagem de T\u00EDtulos");
+
+	pnHeader = new JPanel();
+	pnHeader.setLayout(null);
+	pnHeader.setBackground(Color.WHITE);
+	pnHeader.setBounds(10, 86, 660, 25);
+	add(pnHeader);
+
+	lblConta = new JLabel("CONTA");
+	lblConta.setHorizontalAlignment(SwingConstants.CENTER);
+	lblConta.setFont(new Font("Tahoma", Font.BOLD, 12));
+	lblConta.setFocusable(false);
+	lblConta.setBorder(new TitledBorder(null, "",
+
+	TitledBorder.LEADING, TitledBorder.TOP, null, null));
+	lblConta.setBounds(13, 0, 100, 25);
+	pnHeader.add(lblConta);
+
+	lblData = new JLabel("DATA");
+	lblData.setHorizontalAlignment(SwingConstants.CENTER);
+	lblData.setFont(new Font("Tahoma", Font.BOLD, 12));
+	lblData.setFocusable(false);
+	lblData.setBorder(new TitledBorder(null, "", TitledBorder.LEADING,
+
+	TitledBorder.TOP, null, null));
+	lblData.setBounds(118, 0, 100, 25);
+	pnHeader.add(lblData);
+
+	lblDescricao = new JLabel("DESCRI\u00C7\u00C3O");
+	lblDescricao.setHorizontalAlignment(SwingConstants.CENTER);
+	lblDescricao.setFont(new Font("Tahoma", Font.BOLD, 12));
+	lblDescricao.setFocusable(false);
+	lblDescricao.setBorder(new TitledBorder(null, "", TitledBorder.LEADING,
+
+	TitledBorder.TOP, null, null));
+	lblDescricao.setBounds(223, 0, 275, 25);
+	pnHeader.add(lblDescricao);
+
+	lblValor = new JLabel("VALOR");
+	lblValor.setHorizontalAlignment(SwingConstants.CENTER);
+	lblValor.setFont(new Font("Tahoma", Font.BOLD, 12));
+	lblValor.setFocusable(false);
+	lblValor.setBorder(new TitledBorder(null, "",
+
+	TitledBorder.LEADING, TitledBorder.TOP, null, null));
+	lblValor.setBounds(503, 0, 100, 25);
+	pnHeader.add(lblValor);
+
 	scrollTitulos = new JScrollPane();
 	scrollTitulos.setBorder(new TitledBorder(null, "",
 		TitledBorder.LEADING, TitledBorder.TOP, null, null));
-	scrollTitulos.setBounds(10, 88, 660, 330);
+	scrollTitulos.setBounds(10, 109, 660, 296);
 	add(scrollTitulos);
 
 	pnTitulos = new JPanel();
 	scrollTitulos.setViewportView(pnTitulos);
-
-	//
-	mensagem = new Mensagem(this, "Listagem de T\u00EDtulos");
     }
 
     protected void btnFiltrarActionPerformed(ActionEvent e) {
 	String filtro = cbFiltro.getSelectedItem().toString();
-
 	controller.filtrarPor(filtro);
-
     }
 }

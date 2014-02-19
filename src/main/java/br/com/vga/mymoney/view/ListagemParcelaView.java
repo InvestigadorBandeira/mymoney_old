@@ -11,6 +11,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 
@@ -29,6 +30,11 @@ public class ListagemParcelaView extends JPanel {
     private JButton btnFiltrar;
     private JScrollPane scrollParcelas;
     private JPanel pnParcelas;
+    private JPanel pnHearder;
+    private JLabel lblVencimento;
+    private JLabel lblValor;
+    private JLabel lblCategoria;
+    private JLabel lblObservacao;
 
     public ListagemParcelaView(ListagemParcelaController controller) {
 	this.controller = controller;
@@ -45,9 +51,6 @@ public class ListagemParcelaView extends JPanel {
 		TitledBorder.TOP, null, null));
 	setBounds(30, 20, 680, 489);
 	setLayout(null);
-
-	//
-	mensagem = new Mensagem(this, "Cadastro de Títulos");
 
 	pnFiltro = new JPanel();
 	pnFiltro.setLayout(null);
@@ -79,10 +82,52 @@ public class ListagemParcelaView extends JPanel {
 	btnFiltrar.setBounds(270, 13, 100, 25);
 	pnFiltro.add(btnFiltrar);
 
+	pnHearder = new JPanel();
+	pnHearder.setBackground(Color.WHITE);
+	pnHearder.setLayout(null);
+	pnHearder.setBounds(10, 86, 660, 25);
+	add(pnHearder);
+
+	lblVencimento = new JLabel("VENCIMENTO");
+	lblVencimento.setBorder(new TitledBorder(null, "",
+		TitledBorder.LEADING, TitledBorder.TOP, null, null));
+	lblVencimento.setHorizontalAlignment(SwingConstants.CENTER);
+	lblVencimento.setFont(new Font("Tahoma", Font.BOLD, 12));
+	lblVencimento.setFocusable(false);
+	lblVencimento.setBounds(13, 0, 100, 25);
+	pnHearder.add(lblVencimento);
+
+	lblValor = new JLabel("VALOR");
+	lblValor.setBorder(new TitledBorder(null, "", TitledBorder.LEADING,
+		TitledBorder.TOP, null, null));
+	lblValor.setHorizontalAlignment(SwingConstants.CENTER);
+	lblValor.setFont(new Font("Tahoma", Font.BOLD, 12));
+	lblValor.setFocusable(false);
+	lblValor.setBounds(118, 0, 100, 25);
+	pnHearder.add(lblValor);
+
+	lblCategoria = new JLabel("CATEGORIA");
+	lblCategoria.setBorder(new TitledBorder(null, "", TitledBorder.LEADING,
+		TitledBorder.TOP, null, null));
+	lblCategoria.setHorizontalAlignment(SwingConstants.CENTER);
+	lblCategoria.setFont(new Font("Tahoma", Font.BOLD, 12));
+	lblCategoria.setFocusable(false);
+	lblCategoria.setBounds(223, 0, 100, 25);
+	pnHearder.add(lblCategoria);
+
+	lblObservacao = new JLabel("OBSERVA\u00C7\u00C3O");
+	lblObservacao.setBorder(new TitledBorder(null, "",
+		TitledBorder.LEADING, TitledBorder.TOP, null, null));
+	lblObservacao.setHorizontalAlignment(SwingConstants.CENTER);
+	lblObservacao.setFont(new Font("Tahoma", Font.BOLD, 12));
+	lblObservacao.setFocusable(false);
+	lblObservacao.setBounds(328, 0, 275, 25);
+	pnHearder.add(lblObservacao);
+
 	scrollParcelas = new JScrollPane();
 	scrollParcelas.setBorder(new TitledBorder(null, "",
 		TitledBorder.LEADING, TitledBorder.TOP, null, null));
-	scrollParcelas.setBounds(10, 88, 660, 330);
+	scrollParcelas.setBounds(10, 109, 660, 302);
 	add(scrollParcelas);
 
 	pnParcelas = new JPanel();
@@ -94,8 +139,6 @@ public class ListagemParcelaView extends JPanel {
 
     protected void btnFiltrarActionPerformed(ActionEvent e) {
 	String filtro = cbFiltro.getSelectedItem().toString();
-
 	controller.filtrarPor(filtro);
-
     }
 }
