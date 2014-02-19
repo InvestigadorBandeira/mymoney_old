@@ -8,10 +8,11 @@ import javax.swing.JPanel;
 
 import net.miginfocom.swing.MigLayout;
 import br.com.vga.mymoney.dao.TituloDao;
+import br.com.vga.mymoney.entity.Parcela;
 import br.com.vga.mymoney.entity.Titulo;
 import br.com.vga.mymoney.util.Mensagem;
 import br.com.vga.mymoney.view.ListagemTituloView;
-import br.com.vga.mymoney.view.components.PanelTitulo2;
+import br.com.vga.mymoney.view.components.PanelTitulo;
 
 public class ListagemTituloController {
 
@@ -29,7 +30,7 @@ public class ListagemTituloController {
 
     public void exibeView() {
 	view = new ListagemTituloView(this);
-	filtraPorTodos();
+	filtraPorAbertos();
 	mensagem = new Mensagem(view, "Listagem de Títulos");
 
 	telas.removeAll();
@@ -44,7 +45,6 @@ public class ListagemTituloController {
     }
 
     public void filtrarPor(String filtro) {
-	// "ABERTOS", "QUITADOS", "TODOS"
 	if ("ABERTOS".equals(filtro))
 	    filtraPorAbertos();
 	else if ("QUITADOS".equals(filtro))
@@ -57,11 +57,34 @@ public class ListagemTituloController {
     private void filtraPorAbertos() {
 	List<Titulo> titulos = new ArrayList<>();
 
+	for (Titulo t : dao.findAll()) {
+	    boolean paga = true;
+
+	    for (Parcela p : t.getParcelas())
+		if (p.getPaga() != null && !p.getPaga())
+		    paga = false;
+
+	    if (!paga)
+		titulos.add(t);
+	}
+
 	montaPnTitulos(titulos);
     }
 
     private void filtraPorQuitados() {
 	List<Titulo> titulos = new ArrayList<>();
+
+	for (Titulo t : dao.findAll()) {
+	    boolean paga = true;
+
+	    for (Parcela p : t.getParcelas())
+		if (p.getPaga() != null && !p.getPaga())
+		    paga = false;
+
+	    if (paga)
+		titulos.add(t);
+	}
+
 	montaPnTitulos(titulos);
     }
 
@@ -72,10 +95,10 @@ public class ListagemTituloController {
     private void montaPnTitulos(List<Titulo> titulos) {
 	StringBuilder layout = new StringBuilder("");
 
-	List<PanelTitulo2> panelTitulos = new ArrayList<>();
+	List<PanelTitulo> panelTitulos = new ArrayList<>();
 
 	for (Titulo titulo : titulos)
-	    panelTitulos.add(new PanelTitulo2(titulo));
+	    panelTitulos.add(new PanelTitulo(titulo));
 
 	for (int i = 0; i < panelTitulos.size(); i++)
 	    layout.append("[25px]");

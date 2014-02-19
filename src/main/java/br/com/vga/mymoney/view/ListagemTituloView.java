@@ -46,7 +46,7 @@ public class ListagemTituloView extends JPanel {
 	setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"),
 		"  Listagem de T\u00EDtulos  ", TitledBorder.LEADING,
 		TitledBorder.TOP, null, null));
-	setBounds(30, 20, 575, 489);
+	setBounds(30, 20, 680, 489);
 	setLayout(null);
 
 	//
@@ -58,7 +58,7 @@ public class ListagemTituloView extends JPanel {
 
 	TitledBorder.TOP, null, null));
 	pnFiltro.setBackground(new Color(250, 250, 210));
-	pnFiltro.setBounds(10, 25, 554, 50);
+	pnFiltro.setBounds(10, 25, 660, 50);
 	add(pnFiltro);
 
 	lblFiltrarPor = new JLabel("Filtrar por");
@@ -85,7 +85,7 @@ public class ListagemTituloView extends JPanel {
 	scrollTitulos = new JScrollPane();
 	scrollTitulos.setBorder(new TitledBorder(null, "",
 		TitledBorder.LEADING, TitledBorder.TOP, null, null));
-	scrollTitulos.setBounds(10, 88, 555, 330);
+	scrollTitulos.setBounds(10, 88, 660, 330);
 	add(scrollTitulos);
 
 	pnTitulos = new JPanel();
