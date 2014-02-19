@@ -17,14 +17,15 @@ import br.com.vga.mymoney.view.components.PanelSaldoConta;
 
 public class PrincipalController {
 
-    private PrincipalView view;
-    private Mensagem mensagem;
-    private JPanel telas;
+    private final PrincipalView view;
+    private final Mensagem mensagem;
+    private final JPanel telas;
 
-    private ContaDao contaDao;
-    private PagamentoDao pagamentoDao;
+    private final ContaDao contaDao;
+    private final PagamentoDao pagamentoDao;
 
-    private TituloController tituloController;
+    private final TituloController tituloController;
+    private final ListagemTituloController listagemTituloController;
 
     public PrincipalController(EntityManager em) {
 	view = new PrincipalView(this);
@@ -35,6 +36,7 @@ public class PrincipalController {
 	pagamentoDao = new PagamentoDao(em);
 
 	tituloController = new TituloController(em, telas);
+	listagemTituloController = new ListagemTituloController(em, telas);
 
 	atualizaContas();
 	view.setExtendedState(view.MAXIMIZED_BOTH);
@@ -86,6 +88,11 @@ public class PrincipalController {
 
     public void incluirTitulo() {
 	tituloController.exibeView();
+
+    }
+
+    public void listarTitulos() {
+	listagemTituloController.exibeView();
 
     }
 }
