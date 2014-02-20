@@ -41,6 +41,8 @@ public class PrincipalView extends JFrame {
     private JMenuItem mntmIncluir;
     private JMenuItem mntmListagem;
     private JMenuItem mntmListagemDeParcelas;
+    private JMenu mnTransferencias;
+    private JMenuItem mntmLancar;
 
     public PrincipalView(PrincipalController controller) {
 	this.controller = controller;
@@ -177,6 +179,17 @@ public class PrincipalView extends JFrame {
 	});
 	mnTitulos.add(mntmListagemDeParcelas);
 
+	mnTransferencias = new JMenu("Transfer\u00EAncias");
+	mnFinanceiro.add(mnTransferencias);
+
+	mntmLancar = new JMenuItem("Lan\u00E7ar");
+	mntmLancar.addActionListener(new ActionListener() {
+	    public void actionPerformed(ActionEvent e) {
+		mntmLancarActionPerformed(e);
+	    }
+	});
+	mnTransferencias.add(mntmLancar);
+
     }
 
     protected void mntmIncluirActionPerformed(ActionEvent e) {
@@ -189,6 +202,10 @@ public class PrincipalView extends JFrame {
 
     protected void mntmListagemDeParcelasActionPerformed(ActionEvent e) {
 	controller.listarParcelas();
+    }
+
+    protected void mntmLancarActionPerformed(ActionEvent e) {
+	controller.fazerTransferencia();
     }
 
     private void fechar() {
