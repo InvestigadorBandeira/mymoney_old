@@ -52,7 +52,7 @@ public class AbstractDao<T> {
     }
 
     public List<T> findAll() {
-	CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+	CriteriaQuery<T> cq = em.getCriteriaBuilder().createQuery(persistent);
 	cq.select(cq.from(persistent));
 	return em.createQuery(cq).getResultList();
     }

@@ -54,15 +54,11 @@ public class ListagemParcelaController {
     }
 
     private void filtraPorAbertas() {
-	List<Parcela> parcelas = new ArrayList<>();
-
-	montaPnParcelas(parcelas);
+	montaPnParcelas(dao.buscaAbertas());
     }
 
     private void filtraPorQuitadas() {
-	List<Parcela> parcelas = new ArrayList<>();
-
-	montaPnParcelas(parcelas);
+	montaPnParcelas(dao.buscaQuitadas());
     }
 
     private void filtraPorTodas() {
@@ -70,6 +66,9 @@ public class ListagemParcelaController {
     }
 
     private void montaPnParcelas(List<Parcela> parcelas) {
+	if (parcelas == null || parcelas.isEmpty())
+	    return;
+
 	StringBuilder layout = new StringBuilder("");
 
 	List<PanelParcela> panelParcelas = new ArrayList<>();
