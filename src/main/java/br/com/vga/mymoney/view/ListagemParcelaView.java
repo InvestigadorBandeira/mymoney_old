@@ -35,6 +35,7 @@ public class ListagemParcelaView extends JPanel {
     private JLabel lblValor;
     private JLabel lblCategoria;
     private JLabel lblObservacao;
+    private JButton btnSair;
 
     public ListagemParcelaView(ListagemParcelaController controller) {
 	this.controller = controller;
@@ -135,10 +136,24 @@ public class ListagemParcelaView extends JPanel {
 
 	//
 	mensagem = new Mensagem(this, "Listagem de Parcelas");
+
+	btnSair = new JButton("Sair");
+	btnSair.addActionListener(new ActionListener() {
+	    @Override
+	    public void actionPerformed(ActionEvent e) {
+		btnSairActionPerformed(e);
+	    }
+	});
+	btnSair.setBounds(570, 422, 100, 25);
+	add(btnSair);
     }
 
     protected void btnFiltrarActionPerformed(ActionEvent e) {
 	String filtro = cbFiltro.getSelectedItem().toString();
 	controller.filtrarPor(filtro);
+    }
+
+    protected void btnSairActionPerformed(ActionEvent e) {
+	controller.sair();
     }
 }

@@ -35,6 +35,7 @@ public class ListagemTituloView extends JPanel {
     private JLabel lblData;
     private JLabel lblDescricao;
     private JLabel lblValor;
+    private JButton btnSair;
 
     public ListagemTituloView(ListagemTituloController controller) {
 	this.controller = controller;
@@ -139,10 +140,24 @@ public class ListagemTituloView extends JPanel {
 
 	pnTitulos = new JPanel();
 	scrollTitulos.setViewportView(pnTitulos);
+
+	btnSair = new JButton("Sair");
+	btnSair.addActionListener(new ActionListener() {
+	    @Override
+	    public void actionPerformed(ActionEvent e) {
+		btnSairActionPerformed(e);
+	    }
+	});
+	btnSair.setBounds(570, 416, 100, 25);
+	add(btnSair);
     }
 
     protected void btnFiltrarActionPerformed(ActionEvent e) {
 	String filtro = cbFiltro.getSelectedItem().toString();
 	controller.filtrarPor(filtro);
+    }
+
+    protected void btnSairActionPerformed(ActionEvent e) {
+	controller.sair();
     }
 }
