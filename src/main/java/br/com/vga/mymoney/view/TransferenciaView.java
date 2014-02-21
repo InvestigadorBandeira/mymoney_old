@@ -12,8 +12,8 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
-import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 
 import br.com.vga.mymoney.controller.TransferenciaController;
@@ -24,25 +24,27 @@ import br.com.vga.mymoney.view.components.DecimalFormattedField;
 
 import com.toedter.calendar.JDateChooser;
 
-public class TransferenciaView extends JPanel {
+public class TransferenciaView extends JTabbedPane {
     private static final long serialVersionUID = 1L;
     private JPanel pnTransferencia;
+    private JPanel pnFundo;
     private JLabel lblContaDeOrigem;
-    private JLabel lblData;
-    private JLabel lblDescricao;
-    private JLabel lblValor;
     private JComboBox<Conta> cbContaOrigem;
+    private JLabel lblContaDeDestino;
+    private JComboBox<Conta> cbContaDestino;
+    private JLabel lblData;
     private JDateChooser txtData;
+    private JLabel lblDescricao;
     private JTextField txtDescricao;
     private DecimalFormattedField txtValor;
     private JLabel lblObservacao;
     private JTextField txtObservacao;
-    private JLabel lblContaDeDestino;
-    private JComboBox<Conta> cbContaDestino;
+    private JLabel lblValor;
     private JButton btnFazerTransferencia;
     private JButton btnSair;
 
-    private final TransferenciaController controller;
+    //
+    private TransferenciaController controller;
     private Mensagem mensagem;
 
     public TransferenciaView(TransferenciaController controller) {
@@ -51,100 +53,101 @@ public class TransferenciaView extends JPanel {
     }
 
     private void initComponents() {
-	setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"),
-		"  Fazer Transfer\u00EAncia  ", TitledBorder.LEADING,
-		TitledBorder.TOP, null, null));
-	setBounds(30, 20, 575, 310);
-	setLayout(null);
+	setBounds(30, 20, 580, 400);
 
 	pnTransferencia = new JPanel();
-	pnTransferencia.setBackground(new Color(250, 250, 210));
 	pnTransferencia.setBorder(new TitledBorder(null, "",
 		TitledBorder.LEADING, TitledBorder.TOP, null, null));
-	pnTransferencia.setBounds(10, 25, 554, 234);
-	add(pnTransferencia);
+	addTab("Fazer Transfer\u00EAncia", null, pnTransferencia, null);
 	pnTransferencia.setLayout(null);
+
+	pnFundo = new JPanel();
+	pnFundo.setLayout(null);
+	pnFundo.setBorder(new TitledBorder(null, "",
+
+	TitledBorder.LEADING, TitledBorder.TOP, null, null));
+	pnFundo.setBackground(new Color(250, 250, 210));
+	pnFundo.setBounds(10, 11, 554, 234);
+	pnTransferencia.add(pnFundo);
 
 	lblContaDeOrigem = new JLabel("Conta de Origem");
 	lblContaDeOrigem.setFont(new Font("Tahoma", Font.BOLD, 12));
 	lblContaDeOrigem.setBounds(10, 11, 130, 25);
-	pnTransferencia.add(lblContaDeOrigem);
+	pnFundo.add(lblContaDeOrigem);
 
-	cbContaOrigem = new JComboBox<>();
+	cbContaOrigem = new JComboBox<Conta>();
 	cbContaOrigem.setBounds(150, 12, 270, 25);
-	pnTransferencia.add(cbContaOrigem);
+	pnFundo.add(cbContaOrigem);
 
 	lblContaDeDestino = new JLabel("Conta de Destino");
 	lblContaDeDestino.setFont(new Font("Tahoma", Font.BOLD, 12));
 	lblContaDeDestino.setBounds(10, 47, 130, 25);
-	pnTransferencia.add(lblContaDeDestino);
+	pnFundo.add(lblContaDeDestino);
 
 	cbContaDestino = new JComboBox<Conta>();
 	cbContaDestino.setBounds(150, 50, 270, 25);
-	pnTransferencia.add(cbContaDestino);
+	pnFundo.add(cbContaDestino);
 
 	lblData = new JLabel("Data");
 	lblData.setFont(new Font("Tahoma", Font.BOLD, 12));
 	lblData.setBounds(10, 83, 130, 25);
-	pnTransferencia.add(lblData);
+	pnFundo.add(lblData);
 
 	txtData = new JDateChooser();
 	txtData.setFont(new Font("Tahoma", Font.BOLD, 12));
 	txtData.setBounds(150, 83, 130, 25);
-	pnTransferencia.add(txtData);
+	pnFundo.add(txtData);
 
 	lblDescricao = new JLabel("descri\u00E7\u00E3o");
 	lblDescricao.setFont(new Font("Tahoma", Font.BOLD, 12));
 	lblDescricao.setBounds(10, 119, 130, 25);
-	pnTransferencia.add(lblDescricao);
+	pnFundo.add(lblDescricao);
 
 	txtDescricao = new JTextField();
 	txtDescricao.setFont(new Font("Tahoma", Font.BOLD, 12));
 	txtDescricao.setColumns(10);
 	txtDescricao.setBounds(150, 119, 320, 25);
-	pnTransferencia.add(txtDescricao);
+	pnFundo.add(txtDescricao);
 
-	txtValor = new DecimalFormattedField(DecimalFormattedField.NUMERO);
+	lblValor = new JLabel("Valor");
+	lblValor.setFont(new Font("Tahoma", Font.BOLD, 12));
+	lblValor.setBounds(10, 155, 130, 25);
+	pnFundo.add(lblValor);
+
+	txtValor = new DecimalFormattedField("#,##0.00;-#,##0.00");
 	txtValor.setFont(new Font("Tahoma", Font.BOLD, 12));
 	txtValor.setColumns(10);
 	txtValor.setBounds(150, 155, 130, 25);
-	pnTransferencia.add(txtValor);
+	pnFundo.add(txtValor);
 
 	lblObservacao = new JLabel("Observa\u00E7\u00E3o");
 	lblObservacao.setFont(new Font("Tahoma", Font.BOLD, 12));
 	lblObservacao.setBounds(10, 191, 130, 25);
-	pnTransferencia.add(lblObservacao);
+	pnFundo.add(lblObservacao);
 
 	txtObservacao = new JTextField();
 	txtObservacao.setFont(new Font("Tahoma", Font.BOLD, 12));
 	txtObservacao.setColumns(10);
 	txtObservacao.setBounds(150, 191, 320, 25);
-	pnTransferencia.add(txtObservacao);
-
-	lblValor = new JLabel("Valor");
-	lblValor.setBounds(10, 155, 130, 25);
-	pnTransferencia.add(lblValor);
-	lblValor.setFont(new Font("Tahoma", Font.BOLD, 12));
+	pnFundo.add(txtObservacao);
 
 	btnFazerTransferencia = new JButton("Fazer Transfer\u00EAncia");
 	btnFazerTransferencia.addActionListener(new ActionListener() {
-	    @Override
 	    public void actionPerformed(ActionEvent e) {
-		btnSalvarTituloActionPerformed(e);
+		btnFazerTransferenciaActionPerformed(e);
 	    }
 	});
-	btnFazerTransferencia.setBounds(10, 270, 150, 25);
-	add(btnFazerTransferencia);
+	btnFazerTransferencia.setBounds(10, 256, 150, 25);
+	pnTransferencia.add(btnFazerTransferencia);
 
 	btnSair = new JButton("Sair");
 	btnSair.addActionListener(new ActionListener() {
-	    @Override
 	    public void actionPerformed(ActionEvent e) {
 		btnSairActionPerformed(e);
 	    }
 	});
-	btnSair.setBounds(464, 270, 100, 25);
-	add(btnSair);
+	btnSair.setBounds(464, 256, 100, 25);
+	pnTransferencia.add(btnSair);
 
 	//
 	mensagem = new Mensagem(this, "Cadastro de Títulos");
@@ -165,7 +168,7 @@ public class TransferenciaView extends JPanel {
 	cbContaOrigem.requestFocus();
     }
 
-    protected void btnSalvarTituloActionPerformed(ActionEvent e) {
+    protected void btnFazerTransferenciaActionPerformed(ActionEvent e) {
 	int indexContaOrigem = cbContaOrigem.getSelectedIndex();
 	int indexContaDestino = cbContaOrigem.getSelectedIndex();
 	Calendar data = txtData.getCalendar();
@@ -219,6 +222,5 @@ public class TransferenciaView extends JPanel {
 
     protected void btnSairActionPerformed(ActionEvent e) {
 	controller.sair();
-
     }
 }
