@@ -11,7 +11,7 @@ import javax.swing.border.TitledBorder;
 import br.com.vga.mymoney.entity.Transferencia;
 import br.com.vga.mymoney.util.Formatador;
 
-public class PanelListagem extends JPanel {
+public class PanelTransferencia extends JPanel {
     private static final long serialVersionUID = 1L;
 
     private JTextField txtDescricao;
@@ -22,7 +22,7 @@ public class PanelListagem extends JPanel {
     private JTextField txtObservacao;
     private Transferencia transferencia;
 
-    public PanelListagem(Transferencia transferencia) {
+    public PanelTransferencia(Transferencia transferencia) {
 	super();
 	this.transferencia = transferencia;
 	initComponents();
