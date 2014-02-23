@@ -45,7 +45,7 @@ public class TransferenciaView extends JTabbedPane {
     private JPanel pnListagem;
 
     //
-    private TransferenciaController controller;
+    private final TransferenciaController controller;
     private Mensagem mensagem;
 
     public TransferenciaView(TransferenciaController controller) {
@@ -133,6 +133,7 @@ public class TransferenciaView extends JTabbedPane {
 
 	btnFazerTransferencia = new JButton("Fazer Transfer\u00EAncia");
 	btnFazerTransferencia.addActionListener(new ActionListener() {
+	    @Override
 	    public void actionPerformed(ActionEvent e) {
 		btnFazerTransferenciaActionPerformed(e);
 	    }
@@ -142,6 +143,7 @@ public class TransferenciaView extends JTabbedPane {
 
 	btnSair = new JButton("Sair");
 	btnSair.addActionListener(new ActionListener() {
+	    @Override
 	    public void actionPerformed(ActionEvent e) {
 		btnSairActionPerformed(e);
 	    }
@@ -155,6 +157,7 @@ public class TransferenciaView extends JTabbedPane {
 	pnListagem = new JPanel();
 	pnListagem.setBorder(null);
 	addTab("Listagem de Transfer\u00EAncias", null, pnListagem, null);
+	pnListagem.setLayout(null);
     }
 
     public void montaCombosConta(List<Conta> contas) {
@@ -227,5 +230,4 @@ public class TransferenciaView extends JTabbedPane {
     protected void btnSairActionPerformed(ActionEvent e) {
 	controller.sair();
     }
-
 }
