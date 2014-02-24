@@ -54,9 +54,11 @@ public class TransferenciaController {
 	    view.montaCombosConta(contas);
     }
 
+    // tem que atualizar saldos no global
     public void salvar(Transferencia transferencia) {
 	dao.save(transferencia);
 	view.atualizaCampos();
+	filtraPorTodas();
     }
 
     // implementar filtro data
