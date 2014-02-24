@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
@@ -43,8 +44,11 @@ public class TransferenciaView extends JTabbedPane {
     private JButton btnFazerTransferencia;
     private JButton btnSair;
     private JPanel pnListagem;
+    private JPanel pnFiltro;
+    private JLabel lblFiltrarPor;
+    private JScrollPane scrollTransferencias;
+    private JPanel pnListTransferencias;
 
-    //
     private final TransferenciaController controller;
     private Mensagem mensagem;
 
@@ -53,9 +57,12 @@ public class TransferenciaView extends JTabbedPane {
 	initComponents();
     }
 
+    public JPanel getPnListTransferencias() {
+	return pnListTransferencias;
+    }
+
     private void initComponents() {
 	setBounds(30, 20, 580, 400);
-
 	pnTransferencia = new JPanel();
 	pnTransferencia.setBorder(null);
 	addTab("Fazer Transfer\u00EAncia", null, pnTransferencia, null);
@@ -63,9 +70,8 @@ public class TransferenciaView extends JTabbedPane {
 
 	pnFundo = new JPanel();
 	pnFundo.setLayout(null);
-	pnFundo.setBorder(new TitledBorder(null, "",
-
-	TitledBorder.LEADING, TitledBorder.TOP, null, null));
+	pnFundo.setBorder(new TitledBorder(null, "", TitledBorder.LEADING,
+		TitledBorder.TOP, null, null));
 	pnFundo.setBackground(new Color(250, 250, 210));
 	pnFundo.setBounds(10, 11, 554, 234);
 	pnTransferencia.add(pnFundo);
@@ -158,6 +164,30 @@ public class TransferenciaView extends JTabbedPane {
 	pnListagem.setBorder(null);
 	addTab("Listagem de Transfer\u00EAncias", null, pnListagem, null);
 	pnListagem.setLayout(null);
+
+	pnFiltro = new JPanel();
+	pnFiltro.setLayout(null);
+	pnFiltro.setBorder(new TitledBorder(null, "", TitledBorder.LEADING,
+
+	TitledBorder.TOP, null, null));
+	pnFiltro.setBackground(new Color(250, 250, 210));
+	pnFiltro.setBounds(10, 11, 555, 50);
+	pnListagem.add(pnFiltro);
+
+	lblFiltrarPor = new JLabel("Filtrar por");
+	lblFiltrarPor.setFont(new Font("Tahoma", Font.BOLD, 12));
+	lblFiltrarPor.setBounds(10, 11, 100, 25);
+	pnFiltro.add(lblFiltrarPor);
+
+	scrollTransferencias = new JScrollPane();
+	scrollTransferencias.setBorder(new TitledBorder(null, "",
+
+	TitledBorder.LEADING, TitledBorder.TOP, null, null));
+	scrollTransferencias.setBounds(10, 70, 555, 262);
+	pnListagem.add(scrollTransferencias);
+
+	pnListTransferencias = new JPanel();
+	scrollTransferencias.setViewportView(pnListTransferencias);
     }
 
     public void montaCombosConta(List<Conta> contas) {

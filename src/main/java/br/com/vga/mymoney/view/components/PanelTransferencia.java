@@ -96,21 +96,6 @@ public class PanelTransferencia extends JPanel {
 	txtObservacao.setFont(new Font("Tahoma", Font.BOLD, 12));
 	add(txtObservacao);
 	txtObservacao.setColumns(10);
-
-	// corStatusTitulo();
-    }
-
-    // Status padrão aberto
-    private void corStatusTitulo() {
-	// aberto Color(204, 255, 204) == verde
-	// quitado Color(153, 204, 255) == azul
-
-	Color azul = new Color(153, 204, 255);
-
-	txtContaOrigem.setBackground(azul);
-	txtContaDestino.setBackground(azul);
-	txtDescricao.setBackground(azul);
-	txtData.setBackground(azul);
     }
 
 }

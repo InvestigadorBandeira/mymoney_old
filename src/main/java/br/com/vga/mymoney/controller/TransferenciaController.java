@@ -1,16 +1,19 @@
 package br.com.vga.mymoney.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.swing.JPanel;
 
+import net.miginfocom.swing.MigLayout;
 import br.com.vga.mymoney.dao.ContaDao;
 import br.com.vga.mymoney.dao.TransferenciaDao;
 import br.com.vga.mymoney.entity.Conta;
 import br.com.vga.mymoney.entity.Transferencia;
 import br.com.vga.mymoney.util.Mensagem;
 import br.com.vga.mymoney.view.TransferenciaView;
+import br.com.vga.mymoney.view.components.PanelTransferencia;
 
 public class TransferenciaController {
 
@@ -33,6 +36,7 @@ public class TransferenciaController {
 	view = new TransferenciaView(this);
 	montaCombosConta();
 	view.atualizaCampos();
+	filtraPorTodas();
 	mensagem = new Mensagem(view, "Cadastro de Títulos");
 
 	telas.removeAll();
@@ -53,6 +57,38 @@ public class TransferenciaController {
     public void salvar(Transferencia transferencia) {
 	dao.save(transferencia);
 	view.atualizaCampos();
+    }
+
+    // implementar filtro data
+    public void filtraPorTodas() {
+	montaPnListTransferencias(dao.findAll());
+    }
+
+    private void montaPnListTransferencias(List<Transferencia> transferencias) {
+	if (transferencias == null || transferencias.isEmpty())
+	    return;
+
+	StringBuilder layout = new StringBuilder("");
+
+	List<PanelTransferencia> panelTransferencias = new ArrayList<>();
+
+	for (Transferencia transferencia : transferencias)
+	    panelTransferencias.add(new PanelTransferencia(transferencia));
+
+	for (int i = 0; i < panelTransferencias.size(); i++)
+	    layout.append("[25px]");
+
+	view.getPnListTransferencias().removeAll();
+
+	// Define layout
+	view.getPnListTransferencias().setLayout(
+		new MigLayout("", "[835px]", layout.toString()));
+
+	for (int i = 0; i < panelTransferencias.size(); i++)
+	    view.getPnListTransferencias().add(panelTransferencias.get(i),
+		    "cell 0 " + i + ",grow");
+
+	view.getPnListTransferencias().updateUI();
     }
 
     public void sair() {
