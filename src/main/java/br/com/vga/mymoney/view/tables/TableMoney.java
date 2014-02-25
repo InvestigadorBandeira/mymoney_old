@@ -1,4 +1,4 @@
-package br.com.vga.mymoney.view.components;
+package br.com.vga.mymoney.view.tables;
 
 public interface TableMoney {
 

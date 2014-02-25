@@ -10,6 +10,7 @@ import javax.swing.border.TitledBorder;
 
 import br.com.vga.mymoney.entity.Parcela;
 import br.com.vga.mymoney.util.Formatador;
+import br.com.vga.mymoney.view.tables.TableMoney;
 
 public class PanelParcela extends JPanel implements TableMoney {
     private static final long serialVersionUID = 1L;

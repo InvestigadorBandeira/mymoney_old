@@ -11,8 +11,8 @@ import br.com.vga.mymoney.dao.ParcelaDao;
 import br.com.vga.mymoney.entity.Parcela;
 import br.com.vga.mymoney.util.Mensagem;
 import br.com.vga.mymoney.view.ListagemParcelaView;
-import br.com.vga.mymoney.view.components.PanelHearder;
 import br.com.vga.mymoney.view.components.PanelParcela;
+import br.com.vga.mymoney.view.tables.PanelHearder;
 
 public class ListagemParcelaController {
 

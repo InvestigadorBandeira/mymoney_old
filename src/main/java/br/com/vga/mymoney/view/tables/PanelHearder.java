@@ -1,4 +1,4 @@
-package br.com.vga.mymoney.view.components;
+package br.com.vga.mymoney.view.tables;
 
 import java.awt.Color;
 import java.awt.Font;
