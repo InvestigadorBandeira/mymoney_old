@@ -11,6 +11,7 @@ import br.com.vga.mymoney.dao.ParcelaDao;
 import br.com.vga.mymoney.entity.Parcela;
 import br.com.vga.mymoney.util.Mensagem;
 import br.com.vga.mymoney.view.ListagemParcelaView;
+import br.com.vga.mymoney.view.components.PanelHearder;
 import br.com.vga.mymoney.view.components.PanelParcela;
 
 public class ListagemParcelaController {
@@ -65,11 +66,12 @@ public class ListagemParcelaController {
 	montaPnParcelas(dao.findAll());
     }
 
+    // refatorar
     private void montaPnParcelas(List<Parcela> parcelas) {
 	if (parcelas == null || parcelas.isEmpty())
 	    return;
 
-	StringBuilder layout = new StringBuilder("");
+	StringBuilder layout = new StringBuilder("[25px]");
 
 	List<PanelParcela> panelParcelas = new ArrayList<>();
 
@@ -83,11 +85,14 @@ public class ListagemParcelaController {
 
 	// Define layout
 	view.getPnParcelas().setLayout(
-		new MigLayout("", "[600px]", layout.toString()));
+		new MigLayout("", "[840px]", layout.toString()));
+
+	view.getPnParcelas().add(new PanelHearder(panelParcelas.get(0)),
+		"cell 0 0,grow");
 
 	for (int i = 0; i < panelParcelas.size(); i++)
 	    view.getPnParcelas().add(panelParcelas.get(i),
-		    "cell 0 " + i + ",grow");
+		    "cell 0 " + (i + 1) + ",grow");
 
 	view.getPnParcelas().updateUI();
     }

@@ -11,15 +11,18 @@ import javax.swing.border.TitledBorder;
 import br.com.vga.mymoney.entity.Parcela;
 import br.com.vga.mymoney.util.Formatador;
 
-public class PanelParcela extends JPanel {
+public class PanelParcela extends JPanel implements TableMoney {
     private static final long serialVersionUID = 1L;
 
-    private JTextField txtPbservacao;
+    private JTextField txtObservacao;
     private JTextField txtSubCategoria;
     private JTextField txtValor;
     private JTextField txtDataVencimento;
+    private JTextField txtAcrescimo;
+    private JTextField txtDesconto;
+    private JTextField txtPagaEm;
 
-    private Parcela parcela;
+    private final Parcela parcela;
 
     public PanelParcela(Parcela parcela) {
 	super();
@@ -27,8 +30,23 @@ public class PanelParcela extends JPanel {
 	initComponents();
     }
 
+    @Override
+    public String[] getCabecalho() {
+	String[] cabecalho = { "VENCIMENTO", "VALOR", "CATEGORIA",
+		"OBSERVAÇÃO", "ACRÉSCIMO", "DESCONTO", "PAGO EM" };
+
+	return cabecalho;
+    }
+
+    @Override
+    public int[] getLargura() {
+	int[] largura = { 100, 100, 100, 200, 100, 100, 100 };
+
+	return largura;
+    }
+
     private void initComponents() {
-	setBounds(227, 150, 600, 25);
+	setBounds(0, 0, 840, 25);
 	setLayout(null);
 
 	txtDataVencimento = new JTextField(Formatador.dataTexto(parcela
@@ -66,15 +84,50 @@ public class PanelParcela extends JPanel {
 	add(txtSubCategoria);
 	txtSubCategoria.setColumns(10);
 
-	txtPbservacao = new JTextField(" " + parcela.getObservacao());
-	txtPbservacao.setBackground(new Color(204, 255, 204));
-	txtPbservacao.setBorder(new TitledBorder(null, "",
+	txtObservacao = new JTextField(" " + parcela.getObservacao());
+	txtObservacao.setBackground(new Color(204, 255, 204));
+	txtObservacao.setBorder(new TitledBorder(null, "",
 		TitledBorder.LEADING, TitledBorder.TOP, null, null));
-	txtPbservacao.setBounds(320, 0, 275, 25);
-	txtPbservacao.setFocusable(false);
-	txtPbservacao.setFont(new Font("Tahoma", Font.BOLD, 12));
-	add(txtPbservacao);
-	txtPbservacao.setColumns(10);
+	txtObservacao.setBounds(320, 0, 200, 25);
+	txtObservacao.setFocusable(false);
+	txtObservacao.setFont(new Font("Tahoma", Font.BOLD, 12));
+	add(txtObservacao);
+	txtObservacao.setColumns(10);
+
+	txtAcrescimo = new JTextField(Formatador.valorTexto(parcela
+		.getAcrescimo()) + " ");
+	txtAcrescimo.setHorizontalAlignment(SwingConstants.RIGHT);
+	txtAcrescimo.setFont(new Font("Tahoma", Font.BOLD, 12));
+	txtAcrescimo.setFocusable(false);
+	txtAcrescimo.setColumns(10);
+	txtAcrescimo.setBorder(new TitledBorder(null, "", TitledBorder.LEADING,
+		TitledBorder.TOP, null, null));
+	txtAcrescimo.setBackground(new Color(204, 255, 204));
+	txtAcrescimo.setBounds(525, 0, 100, 25);
+	add(txtAcrescimo);
+
+	txtDesconto = new JTextField(Formatador.valorTexto(parcela
+		.getDesconto()) + " ");
+	txtDesconto.setHorizontalAlignment(SwingConstants.RIGHT);
+	txtDesconto.setFont(new Font("Tahoma", Font.BOLD, 12));
+	txtDesconto.setFocusable(false);
+	txtDesconto.setColumns(10);
+	txtDesconto.setBorder(new TitledBorder(null, "", TitledBorder.LEADING,
+		TitledBorder.TOP, null, null));
+	txtDesconto.setBackground(new Color(204, 255, 204));
+	txtDesconto.setBounds(630, 0, 100, 25);
+	add(txtDesconto);
+
+	txtPagaEm = new JTextField();
+	txtPagaEm.setHorizontalAlignment(SwingConstants.CENTER);
+	txtPagaEm.setFont(new Font("Tahoma", Font.BOLD, 12));
+	txtPagaEm.setFocusable(false);
+	txtPagaEm.setColumns(10);
+	txtPagaEm.setBorder(new TitledBorder(null, "", TitledBorder.LEADING,
+		TitledBorder.TOP, null, null));
+	txtPagaEm.setBackground(new Color(204, 255, 204));
+	txtPagaEm.setBounds(735, 0, 100, 25);
+	add(txtPagaEm);
 
 	corStatusTitulo();
     }
@@ -91,8 +144,13 @@ public class PanelParcela extends JPanel {
 
 	txtDataVencimento.setBackground(azul);
 	txtValor.setBackground(azul);
-	txtPbservacao.setBackground(azul);
+	txtObservacao.setBackground(azul);
 	txtSubCategoria.setBackground(azul);
-    }
+	txtAcrescimo.setBackground(azul);
+	txtDesconto.setBackground(azul);
+	txtPagaEm.setBackground(azul);
 
+	txtPagaEm.setText(Formatador
+		.dataTexto(parcela.getPagamento().getData()));
+    }
 }
