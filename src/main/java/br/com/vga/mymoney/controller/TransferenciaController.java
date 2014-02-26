@@ -14,6 +14,7 @@ import br.com.vga.mymoney.entity.Transferencia;
 import br.com.vga.mymoney.util.Mensagem;
 import br.com.vga.mymoney.view.TransferenciaView;
 import br.com.vga.mymoney.view.components.PanelTransferencia;
+import br.com.vga.mymoney.view.tables.PanelHearder;
 
 public class TransferenciaController {
 
@@ -70,7 +71,7 @@ public class TransferenciaController {
 	if (transferencias == null || transferencias.isEmpty())
 	    return;
 
-	StringBuilder layout = new StringBuilder("");
+	StringBuilder layout = new StringBuilder("[25px]");
 
 	List<PanelTransferencia> panelTransferencias = new ArrayList<>();
 
@@ -86,9 +87,12 @@ public class TransferenciaController {
 	view.getPnListTransferencias().setLayout(
 		new MigLayout("", "[835px]", layout.toString()));
 
+	view.getPnListTransferencias().add(
+		new PanelHearder(panelTransferencias.get(0)), "cell 0 0,grow");
+
 	for (int i = 0; i < panelTransferencias.size(); i++)
 	    view.getPnListTransferencias().add(panelTransferencias.get(i),
-		    "cell 0 " + i + ",grow");
+		    "cell 0 " + (i + 1) + ",grow");
 
 	view.getPnListTransferencias().updateUI();
     }

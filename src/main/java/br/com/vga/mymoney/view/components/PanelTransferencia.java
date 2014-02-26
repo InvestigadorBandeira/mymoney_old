@@ -10,8 +10,9 @@ import javax.swing.border.TitledBorder;
 
 import br.com.vga.mymoney.entity.Transferencia;
 import br.com.vga.mymoney.util.Formatador;
+import br.com.vga.mymoney.view.tables.TableMoney;
 
-public class PanelTransferencia extends JPanel {
+public class PanelTransferencia extends JPanel implements TableMoney {
     private static final long serialVersionUID = 1L;
 
     private JTextField txtDescricao;
@@ -26,6 +27,21 @@ public class PanelTransferencia extends JPanel {
 	super();
 	this.transferencia = transferencia;
 	initComponents();
+    }
+
+    @Override
+    public String[] getCabecalho() {
+	String[] cabecalho = { "ORIGEM", "DESTINO", "DATA", "DESCRIÇÃO",
+		"VALOR", "OBSERVAÇÃO" };
+
+	return cabecalho;
+    }
+
+    @Override
+    public int[] getLargura() {
+	int[] largura = { 100, 100, 100, 200, 100, 200 };
+
+	return largura;
     }
 
     private void initComponents() {
