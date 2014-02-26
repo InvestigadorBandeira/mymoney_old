@@ -2,6 +2,7 @@ package br.com.vga.mymoney.view.components;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.util.Calendar;
 
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -130,28 +131,44 @@ public class PanelParcela extends JPanel implements TableMoney {
 	txtPagaEm.setBounds(735, 0, 100, 25);
 	add(txtPagaEm);
 
-	corStatusTitulo();
+	corStatusParcela();
     }
 
-    // Status padrão aberto
-    private void corStatusTitulo() {
-	// aberto Color(204, 255, 204) == verde
-	// quitado Color(153, 204, 255) == azul
+    // Status padrão aberta, já setada nos campus
+    // adiciona cor vermelha nas parcelas vencidas
+    // ou azul nas quitadas
+    private void corStatusParcela() {
+	// aberta Color(204, 255, 204) == verde
+	// quitada Color(153, 204, 255) == azul
+	// vencida Color(240, 128, 128) == vermelho
 
 	Color azul = new Color(153, 204, 255);
+	Color vermelho = new Color(240, 128, 128);
 
-	if (parcela.getPaga() != null && !parcela.getPaga())
-	    return;
+	if (!parcela.getPaga()) {
+	    // vencida
+	    if (parcela.getDataVencimento().before(Calendar.getInstance())) {
+		txtDataVencimento.setBackground(vermelho);
+		txtValor.setBackground(vermelho);
+		txtObservacao.setBackground(vermelho);
+		txtSubCategoria.setBackground(vermelho);
+		txtAcrescimo.setBackground(vermelho);
+		txtDesconto.setBackground(vermelho);
+		txtPagaEm.setBackground(vermelho);
+	    }
+	}
+	// paga
+	else {
+	    txtDataVencimento.setBackground(azul);
+	    txtValor.setBackground(azul);
+	    txtObservacao.setBackground(azul);
+	    txtSubCategoria.setBackground(azul);
+	    txtAcrescimo.setBackground(azul);
+	    txtDesconto.setBackground(azul);
+	    txtPagaEm.setBackground(azul);
 
-	txtDataVencimento.setBackground(azul);
-	txtValor.setBackground(azul);
-	txtObservacao.setBackground(azul);
-	txtSubCategoria.setBackground(azul);
-	txtAcrescimo.setBackground(azul);
-	txtDesconto.setBackground(azul);
-	txtPagaEm.setBackground(azul);
-
-	txtPagaEm.setText(Formatador
-		.dataTexto(parcela.getPagamento().getData()));
+	    txtPagaEm.setText(Formatador.dataTexto(parcela.getPagamento()
+		    .getData()));
+	}
     }
 }
