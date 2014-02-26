@@ -14,13 +14,13 @@ public class ParcelaDao extends AbstractDao<Parcela> {
     }
 
     public List<Parcela> buscaAbertas() {
-	String jpql = "SELECT p FROM Parcela p WHERE p.paga = false";
+	String jpql = "SELECT p FROM Parcela p WHERE p.paga = false ORDER BY dataVencimento";
 	Query query = em.createQuery(jpql);
 	return query.getResultList();
     }
 
     public List<Parcela> buscaQuitadas() {
-	String jpql = "SELECT p FROM Parcela p WHERE p.paga = true";
+	String jpql = "SELECT p FROM Parcela p WHERE p.paga = true ORDER BY dataVencimento";
 	Query query = em.createQuery(jpql);
 	return query.getResultList();
     }
