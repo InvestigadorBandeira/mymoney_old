@@ -13,6 +13,7 @@ import br.com.vga.mymoney.entity.Titulo;
 import br.com.vga.mymoney.util.Mensagem;
 import br.com.vga.mymoney.view.ListagemTituloView;
 import br.com.vga.mymoney.view.components.PanelTitulo;
+import br.com.vga.mymoney.view.tables.PanelHearder;
 
 public class ListagemTituloController {
 
@@ -93,7 +94,10 @@ public class ListagemTituloController {
     }
 
     private void montaPnTitulos(List<Titulo> titulos) {
-	StringBuilder layout = new StringBuilder("");
+	if (titulos == null || titulos.isEmpty())
+	    return;
+
+	StringBuilder layout = new StringBuilder("[25px]");
 
 	List<PanelTitulo> panelTitulos = new ArrayList<>();
 
@@ -109,9 +113,12 @@ public class ListagemTituloController {
 	view.getPnTitulos().setLayout(
 		new MigLayout("", "[600px]", layout.toString()));
 
+	view.getPnTitulos().add(new PanelHearder(panelTitulos.get(0)),
+		"cell 0 0,grow");
+
 	for (int i = 0; i < panelTitulos.size(); i++)
 	    view.getPnTitulos().add(panelTitulos.get(i),
-		    "cell 0 " + i + ",grow");
+		    "cell 0 " + (i + 1) + ",grow");
 
 	view.getPnTitulos().updateUI();
     }

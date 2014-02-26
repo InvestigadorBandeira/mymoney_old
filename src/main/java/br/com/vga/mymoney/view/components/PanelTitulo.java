@@ -11,8 +11,9 @@ import javax.swing.border.TitledBorder;
 import br.com.vga.mymoney.entity.Parcela;
 import br.com.vga.mymoney.entity.Titulo;
 import br.com.vga.mymoney.util.Formatador;
+import br.com.vga.mymoney.view.tables.TableMoney;
 
-public class PanelTitulo extends JPanel {
+public class PanelTitulo extends JPanel implements TableMoney {
     private static final long serialVersionUID = 1L;
 
     private final Titulo titulo;
@@ -25,6 +26,20 @@ public class PanelTitulo extends JPanel {
 	super();
 	this.titulo = titulo;
 	initComponents();
+    }
+
+    @Override
+    public String[] getCabecalho() {
+	String[] cabecalho = { "CONTA", "DATA", "DESCRIÇÃO", "VALOR" };
+
+	return cabecalho;
+    }
+
+    @Override
+    public int[] getLargura() {
+	int[] largura = { 100, 100, 275, 100 };
+
+	return largura;
     }
 
     private void initComponents() {
