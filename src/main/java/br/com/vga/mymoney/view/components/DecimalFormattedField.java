@@ -104,8 +104,9 @@ public class DecimalFormattedField extends JFormattedTextField {
     /** Limpa o campo para que seja digitado novo valor */
     public void thisFocusGained(FocusEvent fe) {
 	// super.setText(""); // original
-	super.setText(oldValue);
+	super.setText(oldValue.replace(".", ","));
 	normalText();
+	selectAll();
     }
 
     /** Seta os valores no campo */
