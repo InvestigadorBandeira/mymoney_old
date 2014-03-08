@@ -243,6 +243,11 @@ public class TituloView extends JPanel {
 	    return;
 	}
 
+	if (parcelas.isEmpty()) {
+	    mensagem.aviso("É necessário cadastrar pelo menos 1 parcela.");
+	    return;
+	}
+
 	Titulo titulo = new Titulo();
 	titulo.setConta((Conta) cbConta.getSelectedItem());
 	titulo.setData(data);
