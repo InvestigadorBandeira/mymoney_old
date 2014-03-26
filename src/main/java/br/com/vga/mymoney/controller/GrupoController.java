@@ -8,7 +8,7 @@ import br.com.vga.mymoney.entity.Grupo;
 import br.com.vga.mymoney.util.Mensagem;
 import br.com.vga.mymoney.view.GrupoView;
 
-public class GrupoController {
+public class GrupoController implements CrudController<Grupo> {
 
     private final GrupoDao dao;
     private GrupoView view;
@@ -33,6 +33,7 @@ public class GrupoController {
 	view.setVisible(true);
     }
 
+    @Override
     public void salvar(Grupo grupo) {
 	if (dao.existeNome(grupo.getNome())) {
 	    mensagem.aviso("Já existe Grupo cadastrado com esse nome.");
@@ -44,8 +45,19 @@ public class GrupoController {
 	view.montaListagemGrupos(dao.findAll());
     }
 
+    @Override
+    public void atualizar(Grupo grupo) {
+	mensagem.info("Funcionalidade não implementada.");
+    }
+
+    @Override
+    public void excluir(Grupo grupo) {
+	mensagem.info("Funcionalidade não implementada.");
+    }
+
     public void sair() {
 	telas.removeAll();
 	telas.updateUI();
     }
+
 }

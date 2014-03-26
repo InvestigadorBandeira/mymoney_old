@@ -2,6 +2,8 @@ package br.com.vga.mymoney.view.components;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -9,6 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
+import br.com.vga.mymoney.controller.CrudController;
 import br.com.vga.mymoney.entity.Grupo;
 import br.com.vga.mymoney.view.tables.TableMoney;
 
@@ -20,9 +23,12 @@ public class PanelGrupo extends JPanel implements TableMoney {
     private JButton btnEditar;
     private JButton btnExcluir;
 
-    public PanelGrupo(Grupo grupo) {
+    private CrudController<Grupo> controller;
+
+    public PanelGrupo(Grupo grupo, CrudController<Grupo> controller) {
 	super();
 	this.grupo = grupo;
+	this.controller = controller;
 	initComponents();
     }
 
@@ -55,6 +61,11 @@ public class PanelGrupo extends JPanel implements TableMoney {
 	txtNome.setColumns(10);
 
 	btnEditar = new JButton();
+	btnEditar.addActionListener(new ActionListener() {
+	    public void actionPerformed(ActionEvent e) {
+		btnEditarActionPerformed(e);
+	    }
+	});
 	btnEditar.setToolTipText("Editar Grupo.");
 	btnEditar.setIcon(new ImageIcon(PanelGrupo.class
 		.getResource("/br/com/vga/mymoney/images/edit_16x16.png")));
@@ -62,10 +73,23 @@ public class PanelGrupo extends JPanel implements TableMoney {
 	add(btnEditar);
 
 	btnExcluir = new JButton();
+	btnExcluir.addActionListener(new ActionListener() {
+	    public void actionPerformed(ActionEvent e) {
+		btnExcluirActionPerformed(e);
+	    }
+	});
 	btnExcluir.setToolTipText("Excluir Grupo.");
 	btnExcluir.setIcon(new ImageIcon(PanelGrupo.class
 		.getResource("/br/com/vga/mymoney/images/delete_16x16.png")));
 	btnExcluir.setBounds(340, 0, 30, 25);
 	add(btnExcluir);
+    }
+
+    protected void btnEditarActionPerformed(ActionEvent e) {
+	controller.atualizar(grupo);
+    }
+
+    protected void btnExcluirActionPerformed(ActionEvent e) {
+	controller.excluir(grupo);
     }
 }

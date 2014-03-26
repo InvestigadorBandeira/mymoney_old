@@ -124,7 +124,7 @@ public class GrupoView extends JPanel {
 	List<PanelGrupo> panelGrupos = new ArrayList<>();
 
 	for (Grupo grupo : grupos)
-	    panelGrupos.add(new PanelGrupo(grupo));
+	    panelGrupos.add(new PanelGrupo(grupo, controller));
 
 	for (int i = 0; i < panelGrupos.size(); i++)
 	    layout.append("[25px]");
