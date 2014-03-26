@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 
 import net.miginfocom.swing.MigLayout;
 import br.com.vga.mymoney.dao.ContaDao;
+import br.com.vga.mymoney.dao.GrupoDao;
 import br.com.vga.mymoney.dao.PagamentoDao;
 import br.com.vga.mymoney.dao.ReceitaDao;
 import br.com.vga.mymoney.dao.TransferenciaDao;
@@ -29,11 +30,13 @@ public class PrincipalController {
     private PagamentoDao pagamentoDao;
     private TransferenciaDao transferenciaDao;
     private ReceitaDao receitaDao;
+    private GrupoDao grupoDao;
 
     private TituloController tituloController;
     private ListagemTituloController listagemTituloController;
     private ListagemParcelaController listagemParcelaController;
     private TransferenciaController transferenciaController;
+    private GrupoController grupoController;
 
     public PrincipalController(EntityManager em) {
 	view = new PrincipalView(this);
@@ -43,12 +46,14 @@ public class PrincipalController {
 	contaDao = new ContaDao(em);
 	pagamentoDao = new PagamentoDao(em);
 	transferenciaDao = new TransferenciaDao(em);
+	grupoDao = new GrupoDao(em);
 	receitaDao = new ReceitaDao(em);
 
 	tituloController = new TituloController(em, telas);
 	listagemTituloController = new ListagemTituloController(em, telas);
 	listagemParcelaController = new ListagemParcelaController(em, telas);
 	transferenciaController = new TransferenciaController(em, telas);
+	grupoController = new GrupoController(em, telas);
 
 	atualizaContas();
 	view.setExtendedState(view.MAXIMIZED_BOTH);
@@ -126,5 +131,9 @@ public class PrincipalController {
 
     public void fazerTransferencia() {
 	transferenciaController.exibeView();
+    }
+
+    public void incluirGrupo() {
+	grupoController.exibeView();
     }
 }
