@@ -104,7 +104,7 @@ public class TransferenciaView extends JTabbedPane {
 	txtData.setBounds(150, 83, 130, 25);
 	pnFundo.add(txtData);
 
-	lblDescricao = new JLabel("descri\u00E7\u00E3o");
+	lblDescricao = new JLabel("Descri\u00E7\u00E3o");
 	lblDescricao.setFont(new Font("Tahoma", Font.BOLD, 12));
 	lblDescricao.setBounds(10, 119, 130, 25);
 	pnFundo.add(lblDescricao);
