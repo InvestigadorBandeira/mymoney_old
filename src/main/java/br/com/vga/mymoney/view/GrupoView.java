@@ -116,8 +116,11 @@ public class GrupoView extends JPanel {
     }
 
     public void montaListagemGrupos(List<Grupo> grupos) {
-	if (grupos == null || grupos.isEmpty())
+	if (grupos == null || grupos.isEmpty()) {
+	    pnGrupos.removeAll();
+	    pnGrupos.updateUI();
 	    return;
+	}
 
 	StringBuilder layout = new StringBuilder("[25px]");
 

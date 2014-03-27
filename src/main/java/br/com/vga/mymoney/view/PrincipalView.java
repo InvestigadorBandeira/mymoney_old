@@ -147,6 +147,11 @@ public class PrincipalView extends JFrame {
 	mnCadastrar.add(mntmGrupo);
 
 	mntmConta = new JMenuItem("Conta");
+	mntmConta.addActionListener(new ActionListener() {
+	    public void actionPerformed(ActionEvent e) {
+		mntmContaActionPerformed(e);
+	    }
+	});
 	mnCadastrar.add(mntmConta);
 
 	mntmSair = new JMenuItem("Sair");
@@ -215,6 +220,10 @@ public class PrincipalView extends JFrame {
 
     protected void mntmGrupoActionPerformed(ActionEvent e) {
 	controller.incluirGrupo();
+    }
+
+    protected void mntmContaActionPerformed(ActionEvent e) {
+	controller.incluirConta();
     }
 
     private void fechar() {
