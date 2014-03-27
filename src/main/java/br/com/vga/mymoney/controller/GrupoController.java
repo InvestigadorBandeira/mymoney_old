@@ -52,7 +52,18 @@ public class GrupoController implements CrudController<Grupo> {
 
     @Override
     public void excluir(Grupo grupo) {
-	mensagem.info("Funcionalidade não implementada.");
+	if (grupo.getContas() != null && !grupo.getContas().isEmpty()) {
+	    mensagem.info("Existem contas vinculadas a esse grupo.");
+	    return;
+	}
+
+	int confirma = mensagem.confirma("Deseja excluir o grupo: "
+		+ grupo.getNome());
+
+	if (confirma == 0) {
+	    dao.delete(grupo);
+	    view.montaListagemGrupos(dao.findAll());
+	}
     }
 
     public void sair() {
