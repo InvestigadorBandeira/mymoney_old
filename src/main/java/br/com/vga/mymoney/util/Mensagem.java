@@ -6,8 +6,8 @@ import javax.swing.JOptionPane;
 
 public class Mensagem {
 
-    private Component component;
-    private String titulo;
+    private final Component component;
+    private final String titulo;
 
     public Mensagem(Component component, String titulo) {
 	this.component = component;
@@ -32,6 +32,11 @@ public class Mensagem {
     public void aviso(String mensagem) {
 	JOptionPane.showMessageDialog(component, mensagem, titulo,
 		JOptionPane.WARNING_MESSAGE);
+    }
+
+    public int confirma(String mensagem) {
+	return JOptionPane.showConfirmDialog(component, mensagem, titulo,
+		JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
     }
 
 }
