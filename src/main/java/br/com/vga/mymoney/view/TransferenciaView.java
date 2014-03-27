@@ -157,9 +157,6 @@ public class TransferenciaView extends JTabbedPane {
 	btnSair.setBounds(464, 256, 100, 25);
 	pnTransferencia.add(btnSair);
 
-	//
-	mensagem = new Mensagem(this, "Cadastro de Títulos");
-
 	pnListagem = new JPanel();
 	pnListagem.setBorder(null);
 	addTab("Listagem de Transfer\u00EAncias", null, pnListagem, null);
@@ -188,6 +185,9 @@ public class TransferenciaView extends JTabbedPane {
 
 	pnListTransferencias = new JPanel();
 	scrollTransferencias.setViewportView(pnListTransferencias);
+
+	//
+	mensagem = new Mensagem(this, "Cadastro de Trasferências");
     }
 
     public void montaCombosConta(List<Conta> contas) {

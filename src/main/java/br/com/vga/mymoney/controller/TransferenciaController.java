@@ -38,7 +38,7 @@ public class TransferenciaController {
 	montaCombosConta();
 	view.atualizaCampos();
 	filtraPorTodas();
-	mensagem = new Mensagem(view, "Cadastro de Títulos");
+	mensagem = new Mensagem(view, "Cadastro de Transferências");
 
 	telas.removeAll();
 	telas.add(view);
