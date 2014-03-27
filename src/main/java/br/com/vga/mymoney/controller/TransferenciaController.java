@@ -68,8 +68,11 @@ public class TransferenciaController {
     }
 
     private void montaPnListTransferencias(List<Transferencia> transferencias) {
-	if (transferencias == null || transferencias.isEmpty())
+	if (transferencias == null || transferencias.isEmpty()) {
+	    view.getPnListTransferencias().removeAll();
+	    view.getPnListTransferencias().updateUI();
 	    return;
+	}
 
 	StringBuilder layout = new StringBuilder("[25px]");
 

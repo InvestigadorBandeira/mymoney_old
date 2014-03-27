@@ -94,8 +94,11 @@ public class ListagemTituloController {
     }
 
     private void montaPnTitulos(List<Titulo> titulos) {
-	if (titulos == null || titulos.isEmpty())
+	if (titulos == null || titulos.isEmpty()) {
+	    view.getPnTitulos().removeAll();
+	    view.getPnTitulos().updateUI();
 	    return;
+	}
 
 	StringBuilder layout = new StringBuilder("[25px]");
 

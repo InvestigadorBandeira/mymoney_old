@@ -68,8 +68,11 @@ public class ListagemParcelaController {
 
     // refatorar
     private void montaPnParcelas(List<Parcela> parcelas) {
-	if (parcelas == null || parcelas.isEmpty())
+	if (parcelas == null || parcelas.isEmpty()) {
+	    view.getPnParcelas().removeAll();
+	    view.getPnParcelas().updateUI();
 	    return;
+	}
 
 	StringBuilder layout = new StringBuilder("[25px]");
 
