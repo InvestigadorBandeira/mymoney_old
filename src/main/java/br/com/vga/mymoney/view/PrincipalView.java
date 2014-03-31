@@ -170,6 +170,11 @@ public class PrincipalView extends JFrame {
 	mnCadastrar.add(mntmCategoria);
 
 	mntmSubcategoria = new JMenuItem("SubCategoria");
+	mntmSubcategoria.addActionListener(new ActionListener() {
+	    public void actionPerformed(ActionEvent e) {
+		mntmSubcategoriaActionPerformed(e);
+	    }
+	});
 	mnCadastrar.add(mntmSubcategoria);
 
 	mntmSair = new JMenuItem("Sair");
@@ -246,6 +251,10 @@ public class PrincipalView extends JFrame {
 
     protected void mntmCategoriaActionPerformed(ActionEvent e) {
 	controller.incluirCategoria();
+    }
+
+    protected void mntmSubcategoriaActionPerformed(ActionEvent e) {
+	controller.incluirSubCategoria();
     }
 
     private void fechar() {

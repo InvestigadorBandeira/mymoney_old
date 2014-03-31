@@ -37,6 +37,7 @@ public class PrincipalController {
     private GrupoController grupoController;
     private ContaController contaController;
     private CategoriaController categoriaController;
+    private SubCategoriaController subCategoriaController;
 
     public PrincipalController(EntityManager em) {
 	view = new PrincipalView(this);
@@ -55,6 +56,7 @@ public class PrincipalController {
 	grupoController = new GrupoController(em, telas);
 	contaController = new ContaController(em, telas);
 	categoriaController = new CategoriaController(em, telas);
+	subCategoriaController = new SubCategoriaController(em, telas);
 
 	atualizaContas();
 	view.setExtendedState(view.MAXIMIZED_BOTH);
@@ -144,5 +146,9 @@ public class PrincipalController {
 
     public void incluirCategoria() {
 	categoriaController.exibeView();
+    }
+
+    public void incluirSubCategoria() {
+	subCategoriaController.exibeView();
     }
 }
