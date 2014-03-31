@@ -112,7 +112,7 @@ public class CategoriaView extends JPanel {
 	add(btnSair);
 
 	//
-	mensagem = new Mensagem(this, "Cadastro de Grupos");
+	mensagem = new Mensagem(this, "Cadastro de Categorias");
     }
 
     public void montaListagemCategorias(List<Categoria> categorias) {
