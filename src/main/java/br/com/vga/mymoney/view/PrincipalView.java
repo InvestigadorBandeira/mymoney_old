@@ -15,6 +15,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSeparator;
 import javax.swing.JToolBar;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.TitledBorder;
@@ -43,6 +44,9 @@ public class PrincipalView extends JFrame {
     private JMenuItem mntmListagemDeParcelas;
     private JMenu mnTransferencias;
     private JMenuItem mntmLancar;
+    private JMenuItem mntmCategoria;
+    private JSeparator separator;
+    private JMenuItem mntmSubcategoria;
 
     public PrincipalView(PrincipalController controller) {
 	this.controller = controller;
@@ -154,6 +158,20 @@ public class PrincipalView extends JFrame {
 	});
 	mnCadastrar.add(mntmConta);
 
+	separator = new JSeparator();
+	mnCadastrar.add(separator);
+
+	mntmCategoria = new JMenuItem("Categoria");
+	mntmCategoria.addActionListener(new ActionListener() {
+	    public void actionPerformed(ActionEvent e) {
+		mntmCategoriaActionPerformed(e);
+	    }
+	});
+	mnCadastrar.add(mntmCategoria);
+
+	mntmSubcategoria = new JMenuItem("SubCategoria");
+	mnCadastrar.add(mntmSubcategoria);
+
 	mntmSair = new JMenuItem("Sair");
 	mnArquivo.add(mntmSair);
 
@@ -224,6 +242,10 @@ public class PrincipalView extends JFrame {
 
     protected void mntmContaActionPerformed(ActionEvent e) {
 	controller.incluirConta();
+    }
+
+    protected void mntmCategoriaActionPerformed(ActionEvent e) {
+	controller.incluirCategoria();
     }
 
     private void fechar() {

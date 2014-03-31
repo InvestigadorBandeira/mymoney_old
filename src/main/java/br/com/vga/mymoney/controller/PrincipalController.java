@@ -36,6 +36,7 @@ public class PrincipalController {
     private TransferenciaController transferenciaController;
     private GrupoController grupoController;
     private ContaController contaController;
+    private CategoriaController categoriaController;
 
     public PrincipalController(EntityManager em) {
 	view = new PrincipalView(this);
@@ -53,6 +54,7 @@ public class PrincipalController {
 	transferenciaController = new TransferenciaController(em, telas);
 	grupoController = new GrupoController(em, telas);
 	contaController = new ContaController(em, telas);
+	categoriaController = new CategoriaController(em, telas);
 
 	atualizaContas();
 	view.setExtendedState(view.MAXIMIZED_BOTH);
@@ -138,5 +140,9 @@ public class PrincipalController {
 
     public void incluirConta() {
 	contaController.exibeView();
+    }
+
+    public void incluirCategoria() {
+	categoriaController.exibeView();
     }
 }

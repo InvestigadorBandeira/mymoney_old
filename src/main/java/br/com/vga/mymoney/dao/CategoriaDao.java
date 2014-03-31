@@ -10,4 +10,13 @@ public class CategoriaDao extends AbstractDao<Categoria> {
 	super(em);
     }
 
+    public boolean existeNome(String nome) {
+	// sem opção de ignorecase
+	for (Categoria c : findAll())
+	    if (c.getNome().equalsIgnoreCase(nome))
+		return true;
+
+	return false;
+    }
+
 }
