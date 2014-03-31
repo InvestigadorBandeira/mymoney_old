@@ -1,6 +1,7 @@
 package br.com.vga.mymoney.view;
 
 import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -62,6 +63,11 @@ public class PrincipalView extends JFrame {
     }
 
     private void initComponents() {
+	setIconImage(Toolkit
+		.getDefaultToolkit()
+		.getImage(
+			PrincipalView.class
+				.getResource("/br/com/vga/mymoney/images/icon_64x64.png")));
 	addWindowListener(new WindowAdapter() {
 	    @Override
 	    public void windowClosing(WindowEvent e) {
