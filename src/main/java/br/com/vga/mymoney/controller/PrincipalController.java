@@ -54,7 +54,7 @@ public class PrincipalController implements SaldoObserver {
 	listagemParcelaController = new ListagemParcelaController(em, telas);
 	transferenciaController = new TransferenciaController(em, this, telas);
 	grupoController = new GrupoController(em, telas);
-	contaController = new ContaController(em, telas);
+	contaController = new ContaController(em, this, telas);
 	categoriaController = new CategoriaController(em, telas);
 	subCategoriaController = new SubCategoriaController(em, telas);
 

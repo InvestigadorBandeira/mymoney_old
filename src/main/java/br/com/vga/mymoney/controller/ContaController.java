@@ -9,6 +9,7 @@ import br.com.vga.mymoney.dao.ContaDao;
 import br.com.vga.mymoney.dao.GrupoDao;
 import br.com.vga.mymoney.entity.Conta;
 import br.com.vga.mymoney.entity.Grupo;
+import br.com.vga.mymoney.pattern.SaldoObserver;
 import br.com.vga.mymoney.util.Mensagem;
 import br.com.vga.mymoney.view.ContaView;
 
@@ -19,11 +20,14 @@ public class ContaController implements CrudController<Conta> {
     private ContaView view;
     private Mensagem mensagem;
 
+    private SaldoObserver observer;
     private final JPanel telas;
 
-    public ContaController(EntityManager em, JPanel telas) {
+    public ContaController(EntityManager em, SaldoObserver observer,
+	    JPanel telas) {
 	dao = new ContaDao(em);
 	grupoDao = new GrupoDao(em);
+	this.observer = observer;
 	this.telas = telas;
     }
 
@@ -54,22 +58,25 @@ public class ContaController implements CrudController<Conta> {
 	dao.save(contas);
 	view.atualizaCampos();
 	view.montaListagemContas(dao.findAll());
+	observer.atualizaSaldoContas();
     }
 
     @Override
     public void atualizar(Conta conta) {
 	mensagem.info("Funcionalidade não implementada.");
+	// observer.atualizaSaldoContas();
     }
 
     @Override
     public void excluir(Conta conta) {
 
-	int confirma = mensagem.confirma("Deseja excluir o grupo: "
+	int confirma = mensagem.confirma("Deseja excluir a Conta: "
 		+ conta.getNome());
 
 	if (confirma == 0) {
 	    dao.delete(conta);
 	    view.montaListagemContas(dao.findAll());
+	    observer.atualizaSaldoContas();
 	}
     }
 
