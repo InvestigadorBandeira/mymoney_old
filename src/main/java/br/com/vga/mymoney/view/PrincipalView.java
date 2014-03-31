@@ -6,6 +6,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -23,12 +27,14 @@ import javax.swing.border.TitledBorder;
 
 import net.miginfocom.swing.MigLayout;
 import br.com.vga.mymoney.controller.PrincipalController;
+import br.com.vga.mymoney.entity.Conta;
 import br.com.vga.mymoney.util.Conexao;
+import br.com.vga.mymoney.view.components.PanelSaldoConta;
 
 public class PrincipalView extends JFrame {
     private JMenuBar menuBar;
     private JPanel pnTelas;
-    private JPanel pnContas;
+    private JPanel pnListagem;
     private JToolBar toolBar;
     private JButton btnContas;
     private JMenu mnArquivo;
@@ -52,10 +58,6 @@ public class PrincipalView extends JFrame {
     public PrincipalView(PrincipalController controller) {
 	this.controller = controller;
 	initComponents();
-    }
-
-    public JPanel getPnContas() {
-	return pnContas;
     }
 
     public JPanel getPnTelas() {
@@ -84,11 +86,11 @@ public class PrincipalView extends JFrame {
 	pnTelas.setBorder(new TitledBorder(null, "", TitledBorder.LEADING,
 		TitledBorder.TOP, null, null));
 
-	pnContas = new JPanel();
-	pnContas.setBorder(new TitledBorder(null, "", TitledBorder.LEADING,
+	pnListagem = new JPanel();
+	pnListagem.setBorder(new TitledBorder(null, "", TitledBorder.LEADING,
 
 	TitledBorder.TOP, null, null));
-	pnContas.setLayout(new MigLayout("", "[]", "[]"));
+	pnListagem.setLayout(new MigLayout("", "[]", "[]"));
 
 	toolBar = new JToolBar();
 	toolBar.setFloatable(false);
@@ -99,7 +101,7 @@ public class PrincipalView extends JFrame {
 			groupLayout
 				.createSequentialGroup()
 				.addContainerGap()
-				.addComponent(pnContas,
+				.addComponent(pnListagem,
 					GroupLayout.PREFERRED_SIZE, 200,
 					GroupLayout.PREFERRED_SIZE)
 				.addPreferredGap(ComponentPlacement.RELATED)
@@ -124,7 +126,7 @@ public class PrincipalView extends JFrame {
 							.createParallelGroup(
 								Alignment.TRAILING)
 							.addComponent(
-								pnContas,
+								pnListagem,
 								GroupLayout.DEFAULT_SIZE,
 								276,
 								Short.MAX_VALUE)
@@ -229,6 +231,33 @@ public class PrincipalView extends JFrame {
 	});
 	mnTransferencias.add(mntmLancar);
 
+    }
+
+    public void montaListagemSaldoContas(Map<Conta, BigDecimal> saldos) {
+	pnListagem.removeAll();
+
+	StringBuilder layout = new StringBuilder("[40px][1px]");
+
+	for (int i = 1; i < saldos.size(); i++)
+	    layout.append("[40px]");
+
+	List<PanelSaldoConta> panelSaldoContas = new ArrayList<>();
+
+	for (Conta c : saldos.keySet())
+	    panelSaldoContas.add(new PanelSaldoConta(c, saldos.get(c)));
+
+	// Define layout
+	pnListagem.setLayout(new MigLayout("", "[200px]", layout.toString()));
+
+	pnListagem.add(panelSaldoContas.get(panelSaldoContas.size() - 1),
+		"cell 0 0,grow");
+	pnListagem.add(new JPanel(), "cell 0 1,grow");
+
+	for (int i = 0; i < panelSaldoContas.size() - 1; i++)
+	    pnListagem.add(panelSaldoContas.get(i), "cell 0 " + (i + 2)
+		    + ",grow");
+
+	pnListagem.updateUI();
     }
 
     protected void mntmIncluirActionPerformed(ActionEvent e) {
