@@ -2,12 +2,17 @@ package br.com.vga.mymoney.view.components;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 
+import br.com.vga.mymoney.controller.CrudController;
 import br.com.vga.mymoney.entity.Transferencia;
 import br.com.vga.mymoney.util.Formatador;
 import br.com.vga.mymoney.view.tables.TableMoney;
@@ -22,10 +27,16 @@ public class PanelTransferencia extends JPanel implements TableMoney {
     private JTextField txtValor;
     private JTextField txtObservacao;
     private Transferencia transferencia;
+    private JButton btnEditar;
+    private JButton btnExcluir;
 
-    public PanelTransferencia(Transferencia transferencia) {
+    private CrudController<Transferencia> controller;
+
+    public PanelTransferencia(Transferencia transferencia,
+	    CrudController<Transferencia> controller) {
 	super();
 	this.transferencia = transferencia;
+	this.controller = controller;
 	initComponents();
     }
 
@@ -45,7 +56,7 @@ public class PanelTransferencia extends JPanel implements TableMoney {
     }
 
     private void initComponents() {
-	setBounds(227, 150, 835, 25);
+	setBounds(227, 150, 905, 25);
 	setLayout(null);
 
 	txtContaOrigem = new JTextField(" " + transferencia.getContaOrigem());
@@ -112,6 +123,37 @@ public class PanelTransferencia extends JPanel implements TableMoney {
 	txtObservacao.setFont(new Font("Tahoma", Font.BOLD, 12));
 	add(txtObservacao);
 	txtObservacao.setColumns(10);
+
+	btnEditar = new JButton();
+	btnEditar.addActionListener(new ActionListener() {
+	    public void actionPerformed(ActionEvent e) {
+		btnEditarActionPerformed(e);
+	    }
+	});
+	btnEditar.setToolTipText("Editar Transferência.");
+	btnEditar.setIcon(new ImageIcon(PanelCategoria.class
+		.getResource("/br/com/vga/mymoney/images/edit_16x16.png")));
+	btnEditar.setBounds(835, 0, 30, 25);
+	add(btnEditar);
+
+	btnExcluir = new JButton();
+	btnExcluir.addActionListener(new ActionListener() {
+	    public void actionPerformed(ActionEvent e) {
+		btnExcluirActionPerformed(e);
+	    }
+	});
+	btnExcluir.setIcon(new ImageIcon(PanelTransferencia.class
+		.getResource("/br/com/vga/mymoney/images/delete_16x16.png")));
+	btnExcluir.setToolTipText("Excluir Transfer\u00EAncia.");
+	btnExcluir.setBounds(870, 0, 30, 25);
+	add(btnExcluir);
     }
 
+    protected void btnEditarActionPerformed(ActionEvent e) {
+	controller.atualizar(transferencia);
+    }
+
+    protected void btnExcluirActionPerformed(ActionEvent e) {
+	controller.excluir(transferencia);
+    }
 }

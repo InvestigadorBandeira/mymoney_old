@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -17,11 +18,14 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
+import net.miginfocom.swing.MigLayout;
 import br.com.vga.mymoney.controller.TransferenciaController;
 import br.com.vga.mymoney.entity.Conta;
 import br.com.vga.mymoney.entity.Transferencia;
 import br.com.vga.mymoney.util.Mensagem;
 import br.com.vga.mymoney.view.components.DecimalFormattedField;
+import br.com.vga.mymoney.view.components.PanelTransferencia;
+import br.com.vga.mymoney.view.tables.PanelHearder;
 
 import com.toedter.calendar.JDateChooser;
 
@@ -55,10 +59,6 @@ public class TransferenciaView extends JTabbedPane {
     public TransferenciaView(TransferenciaController controller) {
 	this.controller = controller;
 	initComponents();
-    }
-
-    public JPanel getPnListTransferencias() {
-	return pnListTransferencias;
     }
 
     private void initComponents() {
@@ -187,7 +187,7 @@ public class TransferenciaView extends JTabbedPane {
 	scrollTransferencias.setViewportView(pnListTransferencias);
 
 	//
-	mensagem = new Mensagem(this, "Cadastro de Trasferências");
+	mensagem = new Mensagem(this, "Cadastro de Transferências");
     }
 
     public void montaCombosConta(List<Conta> contas) {
@@ -203,6 +203,40 @@ public class TransferenciaView extends JTabbedPane {
 	txtDescricao.setText("");
 	txtObservacao.setText("");
 	cbContaOrigem.requestFocus();
+    }
+
+    public void montaListagemTransferencias(List<Transferencia> transferencias) {
+	if (transferencias == null || transferencias.isEmpty()) {
+	    pnListTransferencias.removeAll();
+	    pnListTransferencias.updateUI();
+	    return;
+	}
+
+	StringBuilder layout = new StringBuilder("[25px]");
+
+	List<PanelTransferencia> panelTransferencias = new ArrayList<>();
+
+	for (Transferencia transferencia : transferencias)
+	    panelTransferencias.add(new PanelTransferencia(transferencia,
+		    controller));
+
+	for (int i = 0; i < panelTransferencias.size(); i++)
+	    layout.append("[25px]");
+
+	pnListTransferencias.removeAll();
+
+	// Define layout
+	pnListTransferencias.setLayout(new MigLayout("", "[905px]", layout
+		.toString()));
+
+	pnListTransferencias.add(new PanelHearder(panelTransferencias.get(0)),
+		"cell 0 0,grow");
+
+	for (int i = 0; i < panelTransferencias.size(); i++)
+	    pnListTransferencias.add(panelTransferencias.get(i), "cell 0 "
+		    + (i + 1) + ",grow");
+
+	pnListTransferencias.updateUI();
     }
 
     protected void btnFazerTransferenciaActionPerformed(ActionEvent e) {
@@ -231,8 +265,8 @@ public class TransferenciaView extends JTabbedPane {
 	    return;
 	}
 
-	if (valor.equals(new BigDecimal("0.0"))) {
-	    mensagem.aviso("Valor não pode ser ZERO.");
+	if (valor.equals(new BigDecimal("0.0")) || valor.signum() == -1) {
+	    mensagem.aviso("Valor não pode ser ZERO ou negativo.");
 	    txtValor.requestFocus();
 	    return;
 	}

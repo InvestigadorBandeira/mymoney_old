@@ -1,22 +1,20 @@
 package br.com.vga.mymoney.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.swing.JPanel;
 
-import net.miginfocom.swing.MigLayout;
 import br.com.vga.mymoney.dao.ContaDao;
 import br.com.vga.mymoney.dao.TransferenciaDao;
 import br.com.vga.mymoney.entity.Conta;
 import br.com.vga.mymoney.entity.Transferencia;
+import br.com.vga.mymoney.pattern.SaldoObserver;
+import br.com.vga.mymoney.util.Formatador;
 import br.com.vga.mymoney.util.Mensagem;
 import br.com.vga.mymoney.view.TransferenciaView;
-import br.com.vga.mymoney.view.components.PanelTransferencia;
-import br.com.vga.mymoney.view.tables.PanelHearder;
 
-public class TransferenciaController {
+public class TransferenciaController implements CrudController<Transferencia> {
 
     private final TransferenciaDao dao;
     private TransferenciaView view;
@@ -24,12 +22,15 @@ public class TransferenciaController {
 
     private final ContaDao contaDao;
 
+    private SaldoObserver observer;
     private final JPanel telas;
 
-    public TransferenciaController(EntityManager em, JPanel telas) {
+    public TransferenciaController(EntityManager em, SaldoObserver observer,
+	    JPanel telas) {
 	dao = new TransferenciaDao(em);
 	contaDao = new ContaDao(em);
 
+	this.observer = observer;
 	this.telas = telas;
     }
 
@@ -55,49 +56,43 @@ public class TransferenciaController {
 	    view.montaCombosConta(contas);
     }
 
-    // tem que atualizar saldos no global
+    @Override
     public void salvar(Transferencia transferencia) {
 	dao.save(transferencia);
 	view.atualizaCampos();
 	filtraPorTodas();
+	observer.atualizaSaldoContas();
+    }
+
+    @Override
+    public void atualizar(Transferencia transferencia) {
+	mensagem.info("Funcionalidade não implementada.");
+	// observer.atualizaSaldoContas();
+    }
+
+    @Override
+    public void excluir(Transferencia transferencia) {
+
+	int confirma = mensagem.confirma(String.format(
+		"Deseja excluir a Transferência:\nDe: %s\nPara: %s\nData: "
+			+ "%s\nDescrição: %s\nValor: %s\nObservação: %s",
+		transferencia.getContaOrigem(),
+		transferencia.getContaDestino(),
+		Formatador.dataTexto(transferencia.getData()),
+		transferencia.getDescricao(),
+		Formatador.valorTexto(transferencia.getValor()),
+		transferencia.getObservacao()));
+
+	if (confirma == 0) {
+	    dao.delete(transferencia);
+	    view.montaListagemTransferencias(dao.findAll());
+	    observer.atualizaSaldoContas();
+	}
     }
 
     // implementar filtro data
     public void filtraPorTodas() {
-	montaPnListTransferencias(dao.findAll());
-    }
-
-    private void montaPnListTransferencias(List<Transferencia> transferencias) {
-	if (transferencias == null || transferencias.isEmpty()) {
-	    view.getPnListTransferencias().removeAll();
-	    view.getPnListTransferencias().updateUI();
-	    return;
-	}
-
-	StringBuilder layout = new StringBuilder("[25px]");
-
-	List<PanelTransferencia> panelTransferencias = new ArrayList<>();
-
-	for (Transferencia transferencia : transferencias)
-	    panelTransferencias.add(new PanelTransferencia(transferencia));
-
-	for (int i = 0; i < panelTransferencias.size(); i++)
-	    layout.append("[25px]");
-
-	view.getPnListTransferencias().removeAll();
-
-	// Define layout
-	view.getPnListTransferencias().setLayout(
-		new MigLayout("", "[835px]", layout.toString()));
-
-	view.getPnListTransferencias().add(
-		new PanelHearder(panelTransferencias.get(0)), "cell 0 0,grow");
-
-	for (int i = 0; i < panelTransferencias.size(); i++)
-	    view.getPnListTransferencias().add(panelTransferencias.get(i),
-		    "cell 0 " + (i + 1) + ",grow");
-
-	view.getPnListTransferencias().updateUI();
+	view.montaListagemTransferencias(dao.findAll());
     }
 
     public void sair() {
