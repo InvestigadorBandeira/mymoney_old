@@ -56,6 +56,8 @@ public class PrincipalView extends JFrame {
     private JMenuItem mntmSubcategoria;
     private JMenu mnReceitas;
     private JMenuItem mntmLancarReceita;
+    private JMenu mnPagamentos;
+    private JMenuItem mntmParcelasAPagar;
 
     public PrincipalView(PrincipalController controller) {
 	this.controller = controller;
@@ -251,6 +253,17 @@ public class PrincipalView extends JFrame {
 	});
 	mnReceitas.add(mntmLancarReceita);
 
+	mnPagamentos = new JMenu("Pagamentos");
+	mnFinanceiro.add(mnPagamentos);
+
+	mntmParcelasAPagar = new JMenuItem("Parcelas a Pagar");
+	mntmParcelasAPagar.addActionListener(new ActionListener() {
+	    public void actionPerformed(ActionEvent e) {
+		mntmParcelasAPagarActionPerformed(e);
+	    }
+	});
+	mnPagamentos.add(mntmParcelasAPagar);
+
     }
 
     public void montaListagemSaldoContas(Map<Conta, BigDecimal> saldos) {
@@ -314,6 +327,10 @@ public class PrincipalView extends JFrame {
 
     protected void mntmLancarReceitaActionPerformed(ActionEvent e) {
 	controller.lancarReceita();
+    }
+
+    protected void mntmParcelasAPagarActionPerformed(ActionEvent e) {
+	controller.parcelasAPagar();
     }
 
     private void fechar() {
