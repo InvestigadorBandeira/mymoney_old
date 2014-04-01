@@ -21,23 +21,24 @@ import br.com.vga.mymoney.view.PrincipalView;
 
 public class PrincipalController implements SaldoObserver {
 
-    private PrincipalView view;
-    private Mensagem mensagem;
-    private JPanel telas;
+    private final PrincipalView view;
+    private final Mensagem mensagem;
+    private final JPanel telas;
 
-    private ContaDao contaDao;
-    private PagamentoDao pagamentoDao;
-    private TransferenciaDao transferenciaDao;
-    private ReceitaDao receitaDao;
+    private final ContaDao contaDao;
+    private final PagamentoDao pagamentoDao;
+    private final TransferenciaDao transferenciaDao;
+    private final ReceitaDao receitaDao;
 
-    private TituloController tituloController;
-    private ListagemTituloController listagemTituloController;
-    private ListagemParcelaController listagemParcelaController;
-    private TransferenciaController transferenciaController;
-    private GrupoController grupoController;
-    private ContaController contaController;
-    private CategoriaController categoriaController;
-    private SubCategoriaController subCategoriaController;
+    private final TituloController tituloController;
+    private final ListagemTituloController listagemTituloController;
+    private final ListagemParcelaController listagemParcelaController;
+    private final TransferenciaController transferenciaController;
+    private final GrupoController grupoController;
+    private final ContaController contaController;
+    private final CategoriaController categoriaController;
+    private final SubCategoriaController subCategoriaController;
+    private final ReceitaController receitaController;
 
     public PrincipalController(EntityManager em) {
 	view = new PrincipalView(this);
@@ -57,6 +58,7 @@ public class PrincipalController implements SaldoObserver {
 	contaController = new ContaController(em, this, telas);
 	categoriaController = new CategoriaController(em, telas);
 	subCategoriaController = new SubCategoriaController(em, telas);
+	receitaController = new ReceitaController(em, this, telas);
 
 	atualizaSaldoContas();
 	view.setExtendedState(view.MAXIMIZED_BOTH);
@@ -137,5 +139,9 @@ public class PrincipalController implements SaldoObserver {
 
     public void incluirSubCategoria() {
 	subCategoriaController.exibeView();
+    }
+
+    public void lancarReceita() {
+	receitaController.exibeView();
     }
 }

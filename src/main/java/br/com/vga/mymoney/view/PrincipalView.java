@@ -54,6 +54,8 @@ public class PrincipalView extends JFrame {
     private JMenuItem mntmCategoria;
     private JSeparator separator;
     private JMenuItem mntmSubcategoria;
+    private JMenu mnReceitas;
+    private JMenuItem mntmLancarReceita;
 
     public PrincipalView(PrincipalController controller) {
 	this.controller = controller;
@@ -152,6 +154,7 @@ public class PrincipalView extends JFrame {
 
 	mntmGrupo = new JMenuItem("Grupo");
 	mntmGrupo.addActionListener(new ActionListener() {
+	    @Override
 	    public void actionPerformed(ActionEvent e) {
 		mntmGrupoActionPerformed(e);
 	    }
@@ -160,6 +163,7 @@ public class PrincipalView extends JFrame {
 
 	mntmConta = new JMenuItem("Conta");
 	mntmConta.addActionListener(new ActionListener() {
+	    @Override
 	    public void actionPerformed(ActionEvent e) {
 		mntmContaActionPerformed(e);
 	    }
@@ -171,6 +175,7 @@ public class PrincipalView extends JFrame {
 
 	mntmCategoria = new JMenuItem("Categoria");
 	mntmCategoria.addActionListener(new ActionListener() {
+	    @Override
 	    public void actionPerformed(ActionEvent e) {
 		mntmCategoriaActionPerformed(e);
 	    }
@@ -179,6 +184,7 @@ public class PrincipalView extends JFrame {
 
 	mntmSubcategoria = new JMenuItem("SubCategoria");
 	mntmSubcategoria.addActionListener(new ActionListener() {
+	    @Override
 	    public void actionPerformed(ActionEvent e) {
 		mntmSubcategoriaActionPerformed(e);
 	    }
@@ -214,6 +220,7 @@ public class PrincipalView extends JFrame {
 
 	mntmListagemDeParcelas = new JMenuItem("Listagem de Parcelas");
 	mntmListagemDeParcelas.addActionListener(new ActionListener() {
+	    @Override
 	    public void actionPerformed(ActionEvent e) {
 		mntmListagemDeParcelasActionPerformed(e);
 	    }
@@ -225,11 +232,24 @@ public class PrincipalView extends JFrame {
 
 	mntmLancar = new JMenuItem("Lan\u00E7ar");
 	mntmLancar.addActionListener(new ActionListener() {
+	    @Override
 	    public void actionPerformed(ActionEvent e) {
 		mntmLancarActionPerformed(e);
 	    }
 	});
 	mnTransferencias.add(mntmLancar);
+
+	mnReceitas = new JMenu("Receitas");
+	mnFinanceiro.add(mnReceitas);
+
+	mntmLancarReceita = new JMenuItem("Lan\u00E7ar");
+	mntmLancarReceita.addActionListener(new ActionListener() {
+	    @Override
+	    public void actionPerformed(ActionEvent arg0) {
+		mntmLancarReceitaActionPerformed(arg0);
+	    }
+	});
+	mnReceitas.add(mntmLancarReceita);
 
     }
 
@@ -290,6 +310,10 @@ public class PrincipalView extends JFrame {
 
     protected void mntmSubcategoriaActionPerformed(ActionEvent e) {
 	controller.incluirSubCategoria();
+    }
+
+    protected void mntmLancarReceitaActionPerformed(ActionEvent e) {
+	controller.lancarReceita();
     }
 
     private void fechar() {
