@@ -233,6 +233,9 @@ public class ParcelaView extends JDialog {
 	parcela.setSubCategoria(subCategoria);
 	parcela.setObservacao(observacao);
 
+	parcela.setDesconto(BigDecimal.ZERO);
+	parcela.setAcrescimo(BigDecimal.ZERO);
+
 	tbParcelas.adicionaParcela(parcela);
 	atualizaQtdeTotal();
 	atualizaCampos();
