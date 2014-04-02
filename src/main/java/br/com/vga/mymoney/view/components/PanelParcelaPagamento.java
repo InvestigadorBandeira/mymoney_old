@@ -16,6 +16,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 
 import br.com.vga.mymoney.entity.Parcela;
+import br.com.vga.mymoney.pattern.PagamentoObserver;
 import br.com.vga.mymoney.util.Formatador;
 import br.com.vga.mymoney.view.tables.TableMoney;
 
@@ -29,13 +30,15 @@ public class PanelParcelaPagamento extends JPanel implements TableMoney {
     private DecimalFormattedField txtAcrescimo;
     private DecimalFormattedField txtDesconto;
     private JTextField txtTotalAPagar;
-
-    private final Parcela parcela;
     private JCheckBox checkPagar;
 
-    public PanelParcelaPagamento(Parcela parcela) {
+    private final Parcela parcela;
+    private PagamentoObserver observer;
+
+    public PanelParcelaPagamento(Parcela parcela, PagamentoObserver observer) {
 	super();
 	this.parcela = parcela;
+	this.observer = observer;
 	initComponents();
     }
 
@@ -59,6 +62,7 @@ public class PanelParcelaPagamento extends JPanel implements TableMoney {
 	setLayout(null);
 
 	checkPagar = new JCheckBox("");
+	checkPagar.setHorizontalAlignment(SwingConstants.CENTER);
 	checkPagar.setBackground(Color.WHITE);
 	checkPagar.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent e) {
@@ -166,18 +170,6 @@ public class PanelParcelaPagamento extends JPanel implements TableMoney {
 	calculaTotalAPagar();
     }
 
-    private void calculaTotalAPagar() {
-	BigDecimal total = parcela.getValor();
-
-	String desconto = txtDesconto.getValue().toString();
-	String acrescimo = txtAcrescimo.getValue().toString();
-
-	total = total.add(new BigDecimal(acrescimo)).subtract(
-		new BigDecimal(desconto));
-
-	txtTotalAPagar.setText(Formatador.valorTexto(total) + " ");
-    }
-
     // Status padrão aberta, já setada nos campus
     // adiciona cor vermelha nas parcelas vencidas
     // ou azul nas quitadas
@@ -215,24 +207,43 @@ public class PanelParcelaPagamento extends JPanel implements TableMoney {
 	}
     }
 
+    private void calculaTotalAPagar() {
+	BigDecimal total = parcela.getValor();
+
+	total = total.add(parcela.getAcrescimo()).subtract(
+		parcela.getDesconto());
+
+	txtTotalAPagar.setText(Formatador.valorTexto(total) + " ");
+    }
+
     protected void txtAcrescimoFocusLost(FocusEvent e) {
+	String acrescimo = txtAcrescimo.getValue().toString();
+	parcela.setAcrescimo(new BigDecimal(acrescimo));
 	calculaTotalAPagar();
+	observer.calculaTotal();
     }
 
     protected void txtDescontoFocusLost(FocusEvent e) {
+	String desconto = txtDesconto.getValue().toString();
+	parcela.setDesconto(new BigDecimal(desconto));
 	calculaTotalAPagar();
+	observer.calculaTotal();
     }
 
-    // ver se funciona
     protected void checkPagarActionPerformed(ActionEvent e) {
 	if (checkPagar.isSelected()) {
 	    txtDesconto.setFocusable(true);
 	    txtAcrescimo.setFocusable(true);
+	    observer.incluirParcela(parcela);
 	} else {
 	    txtDesconto.setFocusable(false);
 	    txtDesconto.setText("0.0");
+	    parcela.setDesconto(new BigDecimal("0.0"));
 	    txtAcrescimo.setFocusable(false);
 	    txtAcrescimo.setText("0.0");
+	    parcela.setAcrescimo(new BigDecimal("0.0"));
+	    calculaTotalAPagar();
+	    observer.excluirParcela(parcela);
 	}
     }
 }

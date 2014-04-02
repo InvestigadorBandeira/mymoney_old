@@ -1,17 +1,24 @@
 package br.com.vga.mymoney.controller;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.swing.JPanel;
 
 import br.com.vga.mymoney.dao.ParcelaDao;
+import br.com.vga.mymoney.entity.Parcela;
+import br.com.vga.mymoney.pattern.PagamentoObserver;
 import br.com.vga.mymoney.util.Mensagem;
 import br.com.vga.mymoney.view.ParcelaPagamentoView;
 
-public class ParcelaPagamentoController {
+public class ParcelaPagamentoController implements PagamentoObserver {
 
     private final ParcelaDao dao;
     private ParcelaPagamentoView view;
     private Mensagem mensagem;
+    List<Parcela> parcelas;
 
     private final JPanel telas;
 
@@ -25,6 +32,8 @@ public class ParcelaPagamentoController {
 	view = new ParcelaPagamentoView(this);
 	filtraPorAbertas();
 	mensagem = new Mensagem(view, "Listagem de Títulos");
+	parcelas = new ArrayList<Parcela>();
+	calculaTotal();
 
 	telas.removeAll();
 	telas.add(view);
@@ -57,6 +66,37 @@ public class ParcelaPagamentoController {
 
     private void filtraPorTodas() {
 	view.montaListagemParcelas(dao.findAll());
+    }
+
+    @Override
+    public void calculaTotal() {
+	BigDecimal total = BigDecimal.ZERO;
+
+	for (Parcela p : parcelas)
+	    total = total.add(p.getValor().add(
+		    p.getAcrescimo().subtract(p.getDesconto())));
+
+	view.atualizaTotalAPagar(total);
+    }
+
+    @Override
+    public void incluirParcela(Parcela parcela) {
+	parcelas.add(parcela);
+	calculaTotal();
+    }
+
+    @Override
+    public void excluirParcela(Parcela parcela) {
+	parcelas.remove(parcela);
+	calculaTotal();
+    }
+
+    public void pagarParcelas() {
+	if (parcelas == null || parcelas.isEmpty()) {
+	    mensagem.aviso("Não existem parcelas selecionadas.");
+	    return;
+	}
+
     }
 
 }

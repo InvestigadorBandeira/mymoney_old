@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +20,7 @@ import javax.swing.border.TitledBorder;
 import net.miginfocom.swing.MigLayout;
 import br.com.vga.mymoney.controller.ParcelaPagamentoController;
 import br.com.vga.mymoney.entity.Parcela;
+import br.com.vga.mymoney.util.Formatador;
 import br.com.vga.mymoney.util.Mensagem;
 import br.com.vga.mymoney.view.components.PanelParcelaPagamento;
 import br.com.vga.mymoney.view.tables.PanelHearder;
@@ -37,19 +39,17 @@ public class ParcelaPagamentoView extends JPanel {
     private Mensagem mensagem;
 
     private final ParcelaPagamentoController controller;
+    private JButton btnPagarParcelas;
+    private JLabel lblTotalAPagar;
 
     public ParcelaPagamentoView(ParcelaPagamentoController controller) {
 	this.controller = controller;
 	initComponents();
     }
 
-    public JPanel getPnParcelas() {
-	return pnParcelas;
-    }
-
     private void initComponents() {
 	setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"),
-		"  Listagem de Parcelas  ", TitledBorder.LEADING,
+		"  Listagem de Parcelas a Pagar  ", TitledBorder.LEADING,
 		TitledBorder.TOP, null, null));
 	setBounds(30, 20, 970, 490);
 	setLayout(null);
@@ -105,6 +105,22 @@ public class ParcelaPagamentoView extends JPanel {
 	});
 	btnSair.setBounds(860, 422, 100, 25);
 	add(btnSair);
+
+	btnPagarParcelas = new JButton("Pagar Parcelas");
+	btnPagarParcelas.addActionListener(new ActionListener() {
+	    public void actionPerformed(ActionEvent e) {
+		btnPagarParcelasActionPerformed(e);
+	    }
+	});
+	btnPagarParcelas.setBounds(10, 422, 150, 25);
+	add(btnPagarParcelas);
+
+	lblTotalAPagar = new JLabel();
+	lblTotalAPagar.setBorder(new TitledBorder(null, "",
+		TitledBorder.LEADING, TitledBorder.TOP, null, null));
+	lblTotalAPagar.setFont(new Font("Tahoma", Font.BOLD, 12));
+	lblTotalAPagar.setBounds(170, 422, 300, 25);
+	add(lblTotalAPagar);
     }
 
     public void montaListagemParcelas(List<Parcela> parcelas) {
@@ -119,7 +135,7 @@ public class ParcelaPagamentoView extends JPanel {
 	List<PanelParcelaPagamento> panelParcelas = new ArrayList<>();
 
 	for (Parcela parcela : parcelas)
-	    panelParcelas.add(new PanelParcelaPagamento(parcela));
+	    panelParcelas.add(new PanelParcelaPagamento(parcela, controller));
 
 	for (int i = 0; i < panelParcelas.size(); i++)
 	    layout.append("[25px]");
@@ -137,12 +153,22 @@ public class ParcelaPagamentoView extends JPanel {
 	pnParcelas.updateUI();
     }
 
+    public void atualizaTotalAPagar(BigDecimal total) {
+	lblTotalAPagar.setText(" Total a Pagar: "
+		+ Formatador.valorTextoReal(total));
+    }
+
     protected void btnFiltrarActionPerformed(ActionEvent e) {
 	String filtro = cbFiltro.getSelectedItem().toString();
 	controller.filtrarPor(filtro);
     }
 
+    protected void btnPagarParcelasActionPerformed(ActionEvent e) {
+	controller.pagarParcelas();
+    }
+
     protected void btnSairActionPerformed(ActionEvent e) {
 	controller.sair();
     }
+
 }
