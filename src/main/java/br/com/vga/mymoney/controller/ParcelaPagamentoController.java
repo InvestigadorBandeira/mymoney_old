@@ -12,6 +12,7 @@ import br.com.vga.mymoney.dao.PagamentoDao;
 import br.com.vga.mymoney.dao.ParcelaDao;
 import br.com.vga.mymoney.entity.Parcela;
 import br.com.vga.mymoney.pattern.PagamentoObserver;
+import br.com.vga.mymoney.pattern.SaldoObserver;
 import br.com.vga.mymoney.util.Mensagem;
 import br.com.vga.mymoney.view.PagamentoView;
 import br.com.vga.mymoney.view.ParcelaPagamentoView;
@@ -19,19 +20,22 @@ import br.com.vga.mymoney.view.ParcelaPagamentoView;
 public class ParcelaPagamentoController implements PagamentoObserver {
 
     private final ParcelaDao parcelaDao;
-    private ContaDao contaDao;
-    private PagamentoDao pagamentoDao;
+    private final ContaDao contaDao;
+    private final PagamentoDao pagamentoDao;
     private ParcelaPagamentoView view;
     private Mensagem mensagem;
-    List<Parcela> parcelas;
+    private List<Parcela> parcelas;
 
     private final JPanel telas;
+    private final SaldoObserver observer;
 
-    public ParcelaPagamentoController(EntityManager em, JPanel telas) {
+    public ParcelaPagamentoController(EntityManager em, SaldoObserver observer,
+	    JPanel telas) {
 	parcelaDao = new ParcelaDao(em);
 	contaDao = new ContaDao(em);
 	pagamentoDao = new PagamentoDao(em);
 
+	this.observer = observer;
 	this.telas = telas;
     }
 
@@ -112,6 +116,13 @@ public class ParcelaPagamentoController implements PagamentoObserver {
 	PagamentoView view = new PagamentoView(parcelas, contaDao,
 		pagamentoDao, parcelaDao);
 	view.setVisible(true);
+
+	if (parcelas.isEmpty()) {
+	    zeraParcelas();
+	    filtraPorAbertas();
+	    observer.atualizaSaldoContas();
+	}
+
     }
 
 }

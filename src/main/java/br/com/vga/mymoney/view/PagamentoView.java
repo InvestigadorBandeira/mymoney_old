@@ -23,6 +23,7 @@ import br.com.vga.mymoney.dao.ContaDao;
 import br.com.vga.mymoney.dao.PagamentoDao;
 import br.com.vga.mymoney.dao.ParcelaDao;
 import br.com.vga.mymoney.entity.Conta;
+import br.com.vga.mymoney.entity.Pagamento;
 import br.com.vga.mymoney.entity.Parcela;
 import br.com.vga.mymoney.util.Formatador;
 import br.com.vga.mymoney.util.Mensagem;
@@ -50,9 +51,9 @@ public class PagamentoView extends JDialog {
 
     private final List<Parcela> parcelas;
     private JButton btnEfetuarPagamento;
-    private ContaDao contaDao;
-    private PagamentoDao pagamentoDao;
-    private ParcelaDao parcelaDao;
+    private final ContaDao contaDao;
+    private final PagamentoDao pagamentoDao;
+    private final ParcelaDao parcelaDao;
     private JPanel pnParcelas;
 
     public PagamentoView(List<Parcela> parcelas, ContaDao contaDao,
@@ -132,6 +133,8 @@ public class PagamentoView extends JDialog {
 	lblParcelasIncluidas.setFont(new Font("Tahoma", Font.BOLD, 14));
 
 	scrollListagem = new JScrollPane();
+	scrollListagem.setBorder(new TitledBorder(null, "",
+		TitledBorder.LEADING, TitledBorder.TOP, null, null));
 	scrollListagem.setBounds(10, 42, 744, 244);
 	pnParcelasIncluidas.add(scrollListagem);
 
@@ -151,6 +154,7 @@ public class PagamentoView extends JDialog {
 
 	btnEfetuarPagamento = new JButton("Efetuar Pagamento");
 	btnEfetuarPagamento.addActionListener(new ActionListener() {
+	    @Override
 	    public void actionPerformed(ActionEvent e) {
 		btnEfetuarPagamentoActionPerformed(e);
 	    }
@@ -240,5 +244,24 @@ public class PagamentoView extends JDialog {
 
 	Conta conta = cbConta.getItemAt(indexConta);
 
+	Pagamento pagamento = new Pagamento();
+	pagamento.setConta(conta);
+	pagamento.setData(data);
+	pagamento.setParcelas(parcelas);
+	pagamento.setValorTotal(valorTotal);
+
+	// refatorar
+	pagamentoDao.save(pagamento);
+
+	for (Parcela p : parcelas) {
+	    p.setPagamento(pagamento);
+	    p.setPaga(true);
+	    parcelaDao.update(p);
+	}
+
+	mensagem.info("Pagamento efetuado com sucesso.");
+	parcelas.clear();
+
+	this.dispose();
     }
 }
