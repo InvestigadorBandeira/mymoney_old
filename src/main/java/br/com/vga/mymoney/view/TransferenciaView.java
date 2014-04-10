@@ -271,8 +271,8 @@ public class TransferenciaView extends JTabbedPane {
 	    return;
 	}
 
-	Conta contaOrigem = (Conta) cbContaOrigem.getSelectedItem();
-	Conta contaDestino = (Conta) cbContaDestino.getSelectedItem();
+	Conta contaOrigem = cbContaOrigem.getItemAt(indexContaOrigem);
+	Conta contaDestino = cbContaDestino.getItemAt(indexContaDestino);
 
 	if (contaOrigem.equals(contaDestino)) {
 	    mensagem.aviso("Contas de Origem e Destino não podem ser iguais.");
