@@ -7,15 +7,20 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.swing.JPanel;
 
+import br.com.vga.mymoney.dao.ContaDao;
+import br.com.vga.mymoney.dao.PagamentoDao;
 import br.com.vga.mymoney.dao.ParcelaDao;
 import br.com.vga.mymoney.entity.Parcela;
 import br.com.vga.mymoney.pattern.PagamentoObserver;
 import br.com.vga.mymoney.util.Mensagem;
+import br.com.vga.mymoney.view.PagamentoView;
 import br.com.vga.mymoney.view.ParcelaPagamentoView;
 
 public class ParcelaPagamentoController implements PagamentoObserver {
 
-    private final ParcelaDao dao;
+    private final ParcelaDao parcelaDao;
+    private ContaDao contaDao;
+    private PagamentoDao pagamentoDao;
     private ParcelaPagamentoView view;
     private Mensagem mensagem;
     List<Parcela> parcelas;
@@ -23,7 +28,9 @@ public class ParcelaPagamentoController implements PagamentoObserver {
     private final JPanel telas;
 
     public ParcelaPagamentoController(EntityManager em, JPanel telas) {
-	dao = new ParcelaDao(em);
+	parcelaDao = new ParcelaDao(em);
+	contaDao = new ContaDao(em);
+	pagamentoDao = new PagamentoDao(em);
 
 	this.telas = telas;
     }
@@ -32,8 +39,7 @@ public class ParcelaPagamentoController implements PagamentoObserver {
 	view = new ParcelaPagamentoView(this);
 	filtraPorAbertas();
 	mensagem = new Mensagem(view, "Listagem de Títulos");
-	parcelas = new ArrayList<Parcela>();
-	calculaTotal();
+	zeraParcelas();
 
 	telas.removeAll();
 	telas.add(view);
@@ -46,26 +52,32 @@ public class ParcelaPagamentoController implements PagamentoObserver {
 	telas.updateUI();
     }
 
-    public void filtrarPor(String filtro) {
-	if ("ABERTAS".equals(filtro))
-	    filtraPorAbertas();
-	else if ("QUITADAS".equals(filtro))
-	    filtraPorQuitadas();
-	else
-	    filtraPorTodas();
+    private void zeraParcelas() {
+	parcelas = new ArrayList<Parcela>();
+	calculaTotal();
+    }
 
+    public void filtrarPor(String filtro) {
+	// if ("ABERTAS".equals(filtro))
+	filtraPorAbertas();
+	// else if ("QUITADAS".equals(filtro))
+	// filtraPorQuitadas();
+	// else
+	// filtraPorTodas();
+
+	zeraParcelas();
     }
 
     private void filtraPorAbertas() {
-	view.montaListagemParcelas(dao.buscaAbertas());
+	view.montaListagemParcelas(parcelaDao.buscaAbertas());
     }
 
     private void filtraPorQuitadas() {
-	view.montaListagemParcelas(dao.buscaQuitadas());
+	// view.montaListagemParcelas(dao.buscaQuitadas());
     }
 
     private void filtraPorTodas() {
-	view.montaListagemParcelas(dao.findAll());
+	// view.montaListagemParcelas(dao.findAll());
     }
 
     @Override
@@ -97,6 +109,9 @@ public class ParcelaPagamentoController implements PagamentoObserver {
 	    return;
 	}
 
+	PagamentoView view = new PagamentoView(parcelas, contaDao,
+		pagamentoDao, parcelaDao);
+	view.setVisible(true);
     }
 
 }
