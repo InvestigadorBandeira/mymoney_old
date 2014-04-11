@@ -62,13 +62,18 @@ public class ListagemPagamentoController implements CrudController<Pagamento> {
     }
 
     @Override
-    public void atualizar(Pagamento pagamento) {
+    public void alterar(Pagamento pagamento) {
     }
 
     @Override
     public void excluir(Pagamento pagamento) {
 	// atualizar saldos Observer
 	mensagem.info("Funcionalidade não implementada");
+    }
+
+    @Override
+    public void visualizar(Pagamento pagamento) {
+	mensagem.info("Funcionalidade não implementada.");
     }
 
 }

@@ -103,7 +103,7 @@ public class PanelSubCategoria extends JPanel implements TableMoney {
     }
 
     protected void btnEditarActionPerformed(ActionEvent e) {
-	controller.atualizar(subCategoria);
+	controller.alterar(subCategoria);
     }
 
     protected void btnExcluirActionPerformed(ActionEvent e) {

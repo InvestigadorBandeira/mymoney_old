@@ -46,7 +46,7 @@ public class CategoriaController implements CrudController<Categoria> {
     }
 
     @Override
-    public void atualizar(Categoria categoria) {
+    public void alterar(Categoria categoria) {
 	mensagem.info("Funcionalidade não implementada.");
     }
 
@@ -65,6 +65,11 @@ public class CategoriaController implements CrudController<Categoria> {
 	    dao.delete(categoria);
 	    view.montaListagemCategorias(dao.findAll());
 	}
+    }
+
+    @Override
+    public void visualizar(Categoria categoria) {
+	mensagem.info("Funcionalidade não implementada.");
     }
 
     public void sair() {

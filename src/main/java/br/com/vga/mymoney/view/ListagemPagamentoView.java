@@ -123,7 +123,7 @@ public class ListagemPagamentoView extends JPanel {
 	pnPagamentos.removeAll();
 
 	// Define layout
-	pnPagamentos.setLayout(new MigLayout("", "[390px]", layout.toString()));
+	pnPagamentos.setLayout(new MigLayout("", "[425px]", layout.toString()));
 
 	pnPagamentos.add(new PanelHearder(panelPagamentos.get(0)),
 		"cell 0 0,grow");

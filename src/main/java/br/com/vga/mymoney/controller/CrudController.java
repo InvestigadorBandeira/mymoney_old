@@ -4,7 +4,9 @@ public interface CrudController<T> {
 
     public void salvar(T object);
 
-    public void atualizar(T object);
+    public void alterar(T object);
 
     public void excluir(T object);
+
+    public void visualizar(T object);
 }

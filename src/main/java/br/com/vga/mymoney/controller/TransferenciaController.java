@@ -22,7 +22,7 @@ public class TransferenciaController implements CrudController<Transferencia> {
 
     private final ContaDao contaDao;
 
-    private SaldoObserver observer;
+    private final SaldoObserver observer;
     private final JPanel telas;
 
     public TransferenciaController(EntityManager em, SaldoObserver observer,
@@ -65,7 +65,7 @@ public class TransferenciaController implements CrudController<Transferencia> {
     }
 
     @Override
-    public void atualizar(Transferencia transferencia) {
+    public void alterar(Transferencia transferencia) {
 	mensagem.info("Funcionalidade não implementada.");
 	// observer.atualizaSaldoContas();
     }
@@ -88,6 +88,11 @@ public class TransferenciaController implements CrudController<Transferencia> {
 	    view.montaListagemTransferencias(dao.findAll());
 	    observer.atualizaSaldoContas();
 	}
+    }
+
+    @Override
+    public void visualizar(Transferencia transferencia) {
+	mensagem.info("Funcionalidade não implementada.");
     }
 
     // implementar filtro data

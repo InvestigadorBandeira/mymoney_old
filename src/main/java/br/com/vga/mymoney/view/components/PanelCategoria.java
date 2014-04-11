@@ -87,7 +87,7 @@ public class PanelCategoria extends JPanel implements TableMoney {
     }
 
     protected void btnEditarActionPerformed(ActionEvent e) {
-	controller.atualizar(categoria);
+	controller.alterar(categoria);
     }
 
     protected void btnExcluirActionPerformed(ActionEvent e) {

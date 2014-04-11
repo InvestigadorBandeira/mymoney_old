@@ -16,11 +16,11 @@ import br.com.vga.mymoney.view.ContaView;
 public class ContaController implements CrudController<Conta> {
 
     private final ContaDao dao;
-    private GrupoDao grupoDao;
+    private final GrupoDao grupoDao;
     private ContaView view;
     private Mensagem mensagem;
 
-    private SaldoObserver observer;
+    private final SaldoObserver observer;
     private final JPanel telas;
 
     public ContaController(EntityManager em, SaldoObserver observer,
@@ -62,7 +62,7 @@ public class ContaController implements CrudController<Conta> {
     }
 
     @Override
-    public void atualizar(Conta conta) {
+    public void alterar(Conta conta) {
 	mensagem.info("Funcionalidade não implementada.");
 	// observer.atualizaSaldoContas();
     }
@@ -78,6 +78,11 @@ public class ContaController implements CrudController<Conta> {
 	    view.montaListagemContas(dao.findAll());
 	    observer.atualizaSaldoContas();
 	}
+    }
+
+    @Override
+    public void visualizar(Conta conta) {
+	mensagem.info("Funcionalidade não implementada.");
     }
 
     public void sair() {

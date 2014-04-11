@@ -79,7 +79,7 @@ public class ReceitaController implements CrudController<Receita> {
     }
 
     @Override
-    public void atualizar(Receita receita) {
+    public void alterar(Receita receita) {
 	mensagem.info("Funcionalidade não implementada.");
 	// observer.atualizaSaldoContas();
     }
@@ -100,6 +100,11 @@ public class ReceitaController implements CrudController<Receita> {
 	    view.montaListagemReceitas(dao.findAll());
 	    observer.atualizaSaldoContas();
 	}
+    }
+
+    @Override
+    public void visualizar(Receita receita) {
+	mensagem.info("Funcionalidade não implementada.");
     }
 
     // implementar filtro data

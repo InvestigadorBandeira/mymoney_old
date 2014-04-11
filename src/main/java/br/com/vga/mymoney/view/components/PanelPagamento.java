@@ -28,6 +28,7 @@ public class PanelPagamento extends JPanel implements TableMoney {
     private final Pagamento pagamento;
 
     private final CrudController<Pagamento> controller;
+    private JButton btnVisualizar;
 
     public PanelPagamento(Pagamento pagamento,
 	    CrudController<Pagamento> controller) {
@@ -52,7 +53,7 @@ public class PanelPagamento extends JPanel implements TableMoney {
     }
 
     private void initComponents() {
-	setBounds(227, 150, 390, 25);
+	setBounds(227, 150, 425, 25);
 	setLayout(null);
 
 	txtConta = new JTextField(" " + pagamento.getConta());
@@ -102,6 +103,19 @@ public class PanelPagamento extends JPanel implements TableMoney {
 	btnEditar.setBounds(320, 0, 30, 25);
 	add(btnEditar);
 
+	btnVisualizar = new JButton();
+	btnVisualizar.addActionListener(new ActionListener() {
+	    @Override
+	    public void actionPerformed(ActionEvent e) {
+		btnVisualizarActionPerformed(e);
+	    }
+	});
+	btnVisualizar.setToolTipText("Visualizar Pagamento.");
+	btnVisualizar.setIcon(new ImageIcon(PanelPagamento.class
+		.getResource("/br/com/vga/mymoney/images/search_16x16.png")));
+	btnVisualizar.setBounds(355, 0, 30, 25);
+	add(btnVisualizar);
+
 	btnExcluir = new JButton();
 	btnExcluir.addActionListener(new ActionListener() {
 	    @Override
@@ -112,15 +126,20 @@ public class PanelPagamento extends JPanel implements TableMoney {
 	btnExcluir.setIcon(new ImageIcon(PanelPagamento.class
 		.getResource("/br/com/vga/mymoney/images/delete_16x16.png")));
 	btnExcluir.setToolTipText("Excluir Pagamento.");
-	btnExcluir.setBounds(355, 0, 30, 25);
+	btnExcluir.setBounds(390, 0, 30, 25);
 	add(btnExcluir);
     }
 
     protected void btnEditarActionPerformed(ActionEvent e) {
-	controller.atualizar(pagamento);
+	controller.alterar(pagamento);
+    }
+
+    protected void btnVisualizarActionPerformed(ActionEvent e) {
+	controller.visualizar(pagamento);
     }
 
     protected void btnExcluirActionPerformed(ActionEvent e) {
 	controller.excluir(pagamento);
     }
+
 }

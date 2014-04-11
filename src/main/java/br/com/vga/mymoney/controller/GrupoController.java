@@ -46,7 +46,7 @@ public class GrupoController implements CrudController<Grupo> {
     }
 
     @Override
-    public void atualizar(Grupo grupo) {
+    public void alterar(Grupo grupo) {
 	mensagem.info("Funcionalidade não implementada.");
     }
 
@@ -64,6 +64,11 @@ public class GrupoController implements CrudController<Grupo> {
 	    dao.delete(grupo);
 	    view.montaListagemGrupos(dao.findAll());
 	}
+    }
+
+    @Override
+    public void visualizar(Grupo grupo) {
+	mensagem.info("Funcionalidade não implementada.");
     }
 
     public void sair() {

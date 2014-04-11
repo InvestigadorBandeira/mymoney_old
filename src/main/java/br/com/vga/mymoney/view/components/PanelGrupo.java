@@ -86,7 +86,7 @@ public class PanelGrupo extends JPanel implements TableMoney {
     }
 
     protected void btnEditarActionPerformed(ActionEvent e) {
-	controller.atualizar(grupo);
+	controller.alterar(grupo);
     }
 
     protected void btnExcluirActionPerformed(ActionEvent e) {

@@ -116,7 +116,7 @@ public class PanelConta extends JPanel implements TableMoney {
     }
 
     protected void btnEditarActionPerformed(ActionEvent e) {
-	controller.atualizar(conta);
+	controller.alterar(conta);
     }
 
     protected void btnExcluirActionPerformed(ActionEvent e) {

@@ -15,7 +15,7 @@ import br.com.vga.mymoney.view.SubCategoriaView;
 public class SubCategoriaController implements CrudController<SubCategoria> {
 
     private final SubCategoriaDao dao;
-    private CategoriaDao categoriaDao;
+    private final CategoriaDao categoriaDao;
     private SubCategoriaView view;
     private Mensagem mensagem;
 
@@ -57,7 +57,7 @@ public class SubCategoriaController implements CrudController<SubCategoria> {
     }
 
     @Override
-    public void atualizar(SubCategoria subCategoria) {
+    public void alterar(SubCategoria subCategoria) {
 	mensagem.info("Funcionalidade não implementada.");
     }
 
@@ -71,6 +71,11 @@ public class SubCategoriaController implements CrudController<SubCategoria> {
 	    dao.delete(subCategoria);
 	    view.montaListagemSubCategorias(dao.findAll());
 	}
+    }
+
+    @Override
+    public void visualizar(SubCategoria subCategoria) {
+	mensagem.info("Funcionalidade não implementada.");
     }
 
     public void sair() {

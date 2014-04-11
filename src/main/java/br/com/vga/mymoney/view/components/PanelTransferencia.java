@@ -150,7 +150,7 @@ public class PanelTransferencia extends JPanel implements TableMoney {
     }
 
     protected void btnEditarActionPerformed(ActionEvent e) {
-	controller.atualizar(transferencia);
+	controller.alterar(transferencia);
     }
 
     protected void btnExcluirActionPerformed(ActionEvent e) {

@@ -151,7 +151,7 @@ public class PanelReceita extends JPanel implements TableMoney {
     }
 
     protected void btnEditarActionPerformed(ActionEvent e) {
-	controller.atualizar(receita);
+	controller.alterar(receita);
     }
 
     protected void btnExcluirActionPerformed(ActionEvent e) {
