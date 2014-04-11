@@ -58,6 +58,7 @@ public class PrincipalView extends JFrame {
     private JMenuItem mntmLancarReceita;
     private JMenu mnPagamentos;
     private JMenuItem mntmParcelasAPagar;
+    private JMenuItem mntmListagemDePagamentos;
 
     public PrincipalView(PrincipalController controller) {
 	this.controller = controller;
@@ -258,11 +259,21 @@ public class PrincipalView extends JFrame {
 
 	mntmParcelasAPagar = new JMenuItem("Parcelas a Pagar");
 	mntmParcelasAPagar.addActionListener(new ActionListener() {
+	    @Override
 	    public void actionPerformed(ActionEvent e) {
 		mntmParcelasAPagarActionPerformed(e);
 	    }
 	});
 	mnPagamentos.add(mntmParcelasAPagar);
+
+	mntmListagemDePagamentos = new JMenuItem("Listagem de Pagamentos");
+	mntmListagemDePagamentos.addActionListener(new ActionListener() {
+	    @Override
+	    public void actionPerformed(ActionEvent e) {
+		mntmListagemDePagamentosActionPerformed(e);
+	    }
+	});
+	mnPagamentos.add(mntmListagemDePagamentos);
 
     }
 
@@ -331,6 +342,10 @@ public class PrincipalView extends JFrame {
 
     protected void mntmParcelasAPagarActionPerformed(ActionEvent e) {
 	controller.parcelasAPagar();
+    }
+
+    protected void mntmListagemDePagamentosActionPerformed(ActionEvent e) {
+	controller.listarPagamentos();
     }
 
     private void fechar() {

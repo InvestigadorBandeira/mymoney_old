@@ -101,7 +101,7 @@ public class PagamentoView extends JDialog {
 	pnPagamento.add(lblDataPagamento);
 	lblDataPagamento.setFont(new Font("Tahoma", Font.BOLD, 12));
 
-	txtDataPagamento = new JDateChooser();
+	txtDataPagamento = new JDateChooser(Calendar.getInstance().getTime());
 	txtDataPagamento.setBounds(150, 47, 130, 25);
 	pnPagamento.add(txtDataPagamento);
 	txtDataPagamento.setFont(new Font("Tahoma", Font.BOLD, 12));

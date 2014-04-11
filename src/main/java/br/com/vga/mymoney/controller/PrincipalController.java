@@ -40,6 +40,7 @@ public class PrincipalController implements SaldoObserver {
     private final SubCategoriaController subCategoriaController;
     private final ReceitaController receitaController;
     private final ParcelaPagamentoController parcelaPagamentoController;
+    private final ListagemPagamentoController listagemPagamentoController;
 
     public PrincipalController(EntityManager em) {
 	view = new PrincipalView(this);
@@ -62,6 +63,7 @@ public class PrincipalController implements SaldoObserver {
 	receitaController = new ReceitaController(em, this, telas);
 	parcelaPagamentoController = new ParcelaPagamentoController(em, this,
 		telas);
+	listagemPagamentoController = new ListagemPagamentoController(em, telas);
 
 	atualizaSaldoContas();
 	view.setExtendedState(view.MAXIMIZED_BOTH);
@@ -150,5 +152,9 @@ public class PrincipalController implements SaldoObserver {
 
     public void parcelasAPagar() {
 	parcelaPagamentoController.exibeView();
+    }
+
+    public void listarPagamentos() {
+	listagemPagamentoController.exibeView();
     }
 }
