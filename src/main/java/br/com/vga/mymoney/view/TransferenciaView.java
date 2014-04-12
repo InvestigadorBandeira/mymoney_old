@@ -241,7 +241,7 @@ public class TransferenciaView extends JTabbedPane {
 
     protected void btnFazerTransferenciaActionPerformed(ActionEvent e) {
 	int indexContaOrigem = cbContaOrigem.getSelectedIndex();
-	int indexContaDestino = cbContaOrigem.getSelectedIndex();
+	int indexContaDestino = cbContaDestino.getSelectedIndex();
 	Calendar data = txtData.getCalendar();
 	String descricao = txtDescricao.getText().trim();
 	BigDecimal valor = new BigDecimal(txtValor.getValue().toString());
