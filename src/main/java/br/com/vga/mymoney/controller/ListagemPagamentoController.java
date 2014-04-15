@@ -1,24 +1,35 @@
 package br.com.vga.mymoney.controller;
 
+import java.math.BigDecimal;
+
 import javax.persistence.EntityManager;
 import javax.swing.JPanel;
 
 import br.com.vga.mymoney.dao.PagamentoDao;
+import br.com.vga.mymoney.dao.ParcelaDao;
 import br.com.vga.mymoney.entity.Pagamento;
+import br.com.vga.mymoney.entity.Parcela;
+import br.com.vga.mymoney.pattern.SaldoObserver;
+import br.com.vga.mymoney.util.Formatador;
 import br.com.vga.mymoney.util.Mensagem;
 import br.com.vga.mymoney.view.ListagemPagamentoView;
 
 public class ListagemPagamentoController implements CrudController<Pagamento> {
 
     private final PagamentoDao dao;
+    private ParcelaDao parcelaDao;
     private ListagemPagamentoView view;
     private Mensagem mensagem;
 
     private final JPanel telas;
+    private SaldoObserver observer;
 
-    public ListagemPagamentoController(EntityManager em, JPanel telas) {
+    public ListagemPagamentoController(EntityManager em,
+	    SaldoObserver observer, JPanel telas) {
 	dao = new PagamentoDao(em);
+	parcelaDao = new ParcelaDao(em);
 
+	this.observer = observer;
 	this.telas = telas;
     }
 
@@ -67,8 +78,24 @@ public class ListagemPagamentoController implements CrudController<Pagamento> {
 
     @Override
     public void excluir(Pagamento pagamento) {
-	// atualizar saldos Observer
-	mensagem.info("Funcionalidade não implementada");
+	int confirma = mensagem.confirma(String.format("Deseja excluir o "
+		+ "Pagamento:\nConta: %s\nData: %s\nValor Total: %s",
+		pagamento.getConta(),
+		Formatador.dataTexto(pagamento.getData()),
+		Formatador.valorTexto(pagamento.getValorTotal())));
+
+	if (confirma == 0) {
+	    for (Parcela parcela : pagamento.getParcelas()) {
+		parcela.setDesconto(BigDecimal.ZERO);
+		parcela.setAcrescimo(BigDecimal.ZERO);
+		parcela.setPagamento(null);
+		parcela.setPaga(false);
+		parcelaDao.update(parcela);
+	    }
+	    dao.delete(pagamento);
+	    filtraPorTodas();
+	    observer.atualizaSaldoContas();
+	}
     }
 
     @Override

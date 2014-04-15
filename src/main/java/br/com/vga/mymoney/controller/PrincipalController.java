@@ -63,7 +63,8 @@ public class PrincipalController implements SaldoObserver {
 	receitaController = new ReceitaController(em, this, telas);
 	parcelaPagamentoController = new ParcelaPagamentoController(em, this,
 		telas);
-	listagemPagamentoController = new ListagemPagamentoController(em, telas);
+	listagemPagamentoController = new ListagemPagamentoController(em, this,
+		telas);
 
 	atualizaSaldoContas();
 	view.setExtendedState(view.MAXIMIZED_BOTH);
